@@ -1,4 +1,4 @@
-import Landing from "@/components/home/Home";
+import Home from "@/components/home/Home";
 import {Metadata} from "next";
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
       < >
-        <Landing/>
+        <Home/>
       </>
   )
 }
