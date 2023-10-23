@@ -1,0 +1,11 @@
+# docker build . -t chaincue_real_estate && docker compose up
+version: '3.9'
+
+services:
+  chaincue_real_estate:
+    container_name: chaincue_real_estate
+    image: chaincue_real_estate:latest
+    ports:
+      - "3000:80"
+
+

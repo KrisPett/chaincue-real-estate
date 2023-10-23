@@ -1,4 +1,5 @@
-import Landing from "@/components/home/Home";
+import React from "react";
+import Settings from "@/components/settings/Settings";
 import {Metadata} from "next";
 
 export const metadata: Metadata = {
@@ -7,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-      < >
-        <Landing/>
-      </>
+      <main className="flex">
+        <Settings/>
+      </main>
   )
 }
