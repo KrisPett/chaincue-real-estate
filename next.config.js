@@ -1,6 +1,6 @@
 /*** @type {import('next').NextConfig}*/
 module.exports = {
-    output: 'export',
+    output: "standalone",
     images: {unoptimized: true},
     reactStrictMode: true,
     pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
