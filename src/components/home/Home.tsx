@@ -4,7 +4,6 @@ import MultipleSelect from "@/components/home/MultipleSelect";
 const Home = () => {
   return (
       <main className={"flex"}>
-        pipeline
         <div className={"w-full"}>
           <div className={"h-96"}>
             <div className="flex flex-col items-center bg-local h-full"
