@@ -36,7 +36,7 @@ const FilterButton = (props: FilterButtonProps) => {
 
   return (
       <button onClick={() => onClickAddHouseTypesIfNotExistsOrRemove(props.houseTypes)}
-              className={`btn btn-outline btn-lg border-amber-600 text-amber-700 text-sm font-medium border-1 hover:border-amber-400 
+              className={`btn btn-outline btn-lg border-amber-600 text-amber-700 text-sm font-medium border-1 hover:border-amber-400 rounded
                             hover:text-amber-600
                             ${isSelected ? "hover:bg-amber-200" : "hover:bg-transparent"} 
                             ${isSelected ? "bg-amber-200" : "bg-transparent"} 

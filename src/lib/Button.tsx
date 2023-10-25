@@ -11,7 +11,7 @@ const Button = ({title, onClick}: IButton) => {
           draggable
           onClick={onClick}
           onDragEnd={onClick}
-          className="group btn relative rounded-md p-1 text-sm font-medium text-gray-800
+          className="group btn relative rounded p-1 text-sm font-medium text-gray-800
           hover:text-gray-700 hover:border-amber-500
           bg-gradient-to-b from-gray-200 to-gray-300 xxs:w-full normal-case border-amber-600
           "

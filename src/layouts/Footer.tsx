@@ -7,7 +7,7 @@ const Footer = () => {
       <footer className="footer p-5 h-48 min flex justify-center rounded-t-4xl border-amber-600 border-2">
         <div className={""}>
           <div className="mt-10">
-            <Image src={chaincueLogo} alt="" width={300} height={100} className="" priority={true}/>
+            <Image src={chaincueLogo} alt="" width={400} height={100} className="" priority={true}/>
           </div>
         </div>
       </footer>
