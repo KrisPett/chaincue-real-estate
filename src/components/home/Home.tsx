@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import {FilterSearchReqBody, HouseTypes} from "@/components/home/HomeViewModel";
 import Button2 from "@/lib/Button2";
+import Divider from "@/lib/Divider";
 
 const awsImagesLinks = [
   {name: "https://images.chaincuet.com/logos/ancient-rome.jpeg"},
@@ -35,7 +36,7 @@ const FilterButton = (props: FilterButtonProps) => {
 
   return (
       <button onClick={() => onClickAddHouseTypesIfNotExistsOrRemove(props.houseTypes)}
-              className={`btn btn-outline btn-lg border-amber-600 text-amber-600 text-sm font-medium border-1 hover:border-amber-400 
+              className={`btn btn-outline btn-lg border-amber-600 text-amber-700 text-sm font-medium border-1 hover:border-amber-400 
                             hover:text-amber-600
                             ${isSelected ? "hover:bg-amber-200" : "hover:bg-transparent"} 
                             ${isSelected ? "bg-amber-200" : "bg-transparent"} 
@@ -90,8 +91,8 @@ const Home = () => {
   return (
       <main className={"flex"}>
         <div className={"w-full"}>
-          <div className={"h-full"}>
-            <div className="flex flex-col items-center bg-local h-full"
+          <div className={"flex flex-col"}>
+            <section aria-label={"filter_search"} className="flex flex-col items-center bg-local h-full"
                  style={{
                    backgroundImage: `url(${awsImagesLinks[2].name})`,
                    backgroundSize: "cover",
@@ -103,7 +104,7 @@ const Home = () => {
 
                   <section aria-label={"select-country"} className={"md:w-3/12"}>
                     <select id="countries"
-                            className="bg-gray-50 border border-amber-600 text-gray-900 text-sm rounded focus:ring-amber-600 focus:border-amber-600 block w-full p-2.5 hover:border-amber-400"
+                            className="bg-gray-50 border border-amber-600 text-amber-700 text-sm rounded focus:ring-amber-600 focus:border-amber-600 block w-full p-2.5 hover:border-amber-400"
                             defaultValue={"ANY"}
                             onChange={event => onChangeOption(event)}
                     >
@@ -118,7 +119,7 @@ const Home = () => {
                     <textarea
                         className="textarea-bordered textarea w-full resize-none rounded bg-zinc-50 border-amber-600 bg-opacity-60 hover:border-amber-400
                         focus:ring-1 focus:ring-offset-2 focus:ring-offset-amber-600 focus-visible:border-0 focus:outline-none
-                        focus-visible:ring-0 focus-visible:ring-offset-1 focus-visible:ring-offset-orange-30"
+                        focus-visible:ring-0 focus-visible:ring-offset-1 focus-visible:ring-offset-orange-30 text-amber-700"
                         placeholder="Search by place..." onChange={(e) => setText(e.target.value)} rows={textLines}
                         onKeyDown={handleTextareaOnKeydown} value={text}
                         onBlur={event => handleTextareaOnBlur()}
@@ -144,15 +145,7 @@ const Home = () => {
                   </section>
 
                   <section aria-label={"divider"} className={"mt-8"}>
-                    {/*<div className="border-2 border-amber-600"></div>*/}
-
-                    <div className="flex items-center justify-center w-full border-amber-600">
-                      <div className="w-4 h-4 border-t-2 border-l-2 transform -rotate-45 border-amber-600"></div>
-                      <div className="border-2 w-full border-amber-600"></div>
-                      <div className="w-4 h-4 border-t-2 border-r-2 transform rotate-45 border-amber-600"></div>
-                    </div>
-
-
+                    <Divider/>
                   </section>
 
                   <section className={"mt-8 mb-8"}>
@@ -160,7 +153,22 @@ const Home = () => {
                   </section>
                 </div>
               </div>
-            </div>
+            </section>
+            <section aria-label={"recently_added_houses"} className={"flex justify-center"}>
+              <div className={"xxs:w-full md:w-10/12 xl:w-8/12 2xl:w-6/12"}>
+                <div className={""}>
+                  <section className={"flex flex-col items-center mt-8"}>
+                    <p className={"xxs:text-sm xs:text-xl md:text-3xl text-amber-700"}>Invest In Real Estate, Pay With Crypto</p>
+                  </section>
+                  <section aria-label={"divider"} className={"mt-8"}>
+                    <Divider/>
+                  </section>
+                  <section className={"flex flex-col items-center mt-8"}>
+                    <p className={"xxs:text-lg xs:text-xl md:text-3xl text-amber-700"}>Recently added</p>
+                  </section>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </main>
