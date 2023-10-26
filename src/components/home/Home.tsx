@@ -89,9 +89,8 @@ const RecentlyAddedHouseItem = (props: RecentlyAddedHouseItemProps) => {
           Beds: <span className={"text-amber-800"}>{props.house.beds}</span>
         </p>
         <p className={"text-amber-800 font-normal"}>
-          Price:
-          <span className={"text-green-600 font-bold"}>
-          {props.house.dollarPrice} / <span className={"text-amber-600 font-bold"}>{props.house.cryptoPrice}</span>
+          Price: <span className={"text-green-600 font-bold"}>{props.house.dollarPrice} / <span
+            className={"text-amber-600 font-bold"}>{props.house.cryptoPrice}</span>
           </span>
         </p>
       </div>
