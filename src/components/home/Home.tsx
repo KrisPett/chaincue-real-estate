@@ -45,7 +45,7 @@ const FilterButton = (props: FilterButtonProps) => {
 
   return (
       <button onClick={() => onClickAddHouseTypesIfNotExistsOrRemove(props.houseTypes)}
-              className={`btn btn-outline btn-lg border-amber-600 text-amber-700 text-sm font-medium border-1 hover:border-amber-400 rounded
+              className={`btn btn-outline btn-lg border-amber-600 text-amber-700 text-sm font-medium border-1 hover:border-amber-400 rounded shadow
                             hover:text-amber-600
                             ${isSelected ? "hover:bg-amber-200" : "hover:bg-transparent"} 
                             ${isSelected ? "bg-amber-200" : "bg-transparent"} 
@@ -64,13 +64,13 @@ const RecentlyAddedHouseItem = (props: RecentlyAddedHouseItemProps) => {
   const router = useRouter();
 
   return (
-      <div className="h-full flex flex-col items-start border-2 border-amber-600 rounded p-2 btn
+      <div className="h-full flex flex-col items-start border-2 border-amber-600 rounded p-2 btn shadow-md
        hover:border-amber-500 hover:bg-zinc-50
           bg-white xxs:w-full normal-case
       " onClick={() => router.push(`/house/${props.house.id}`)}>
         <div className={""}>
           <Image
-              className="xxs:h-40 xs:h-72 sm:h-80 md:h-40 lg:h-40"
+              className="xxs:h-40 xs:h-72 sm:h-80 md:h-40 lg:h-40 shadow-md"
               src={props.house.src}
               alt=""
               width={1000}
@@ -149,14 +149,14 @@ const Home = () => {
       <main className={"flex"}>
         <div className={"w-full"}>
           <div className={"flex flex-col"}>
-            <section aria-label={"filter_search"} className="flex flex-col items-center bg-local h-full p-2"
+            <section aria-label={"filter_search"} className="flex flex-col items-center bg-local h-full xs:p-2 sm:p-2 md:p-2 lg:p-10 xl:p-20 shadow-xl"
                      style={{
-                       backgroundImage: `url(${awsImagesLinks[2].name})`,
+                       backgroundImage: `url(${awsImagesLinks[7].name})`,
                        backgroundSize: "cover",
                        backgroundRepeat: "no-repeat",
                      }}>
               <div className="flex justify-center border-amber-600 xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 rounded h-full mb-5 mt-5 bg-zinc-50
-                                  opacity-95">
+                                  opacity-95 shadow-2xl">
                 <div className={"flex flex-col gap-4 w-11/12 mt-8"}>
 
                   <section aria-label={"select-country"} className={"md:w-3/12"}>
@@ -205,7 +205,7 @@ const Home = () => {
                     <Divider/>
                   </section>
 
-                  <section className={"mt-8 mb-8"}>
+                  <section className={"mt-8 mb-10"}>
                     <Button2 title={"Search"} onClick={() => onBtnSearch()}/>
                   </section>
                 </div>
@@ -232,11 +232,8 @@ const Home = () => {
             <section aria-label={"recently_added_houses"} className={"flex justify-center mt-10 p-2"}>
               <div
                   className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 "}>
-                {homeViewModel.recentlyAddedHouses.map(house => {
-                  return (
-                      <div key={house.id}><RecentlyAddedHouseItem house={house}/></div>
-                  )
-                })}
+                {homeViewModel.recentlyAddedHouses
+                    .map(house => <div key={house.id}><RecentlyAddedHouseItem house={house}/></div>)}
               </div>
 
             </section>
