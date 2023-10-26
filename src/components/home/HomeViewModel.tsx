@@ -1,13 +1,22 @@
 export interface HomeViewModel {
   countries: Country[]
+  recentlyAddedHouses: House[]
 }
 
 export interface Country {
   name: string
 }
 
-
-
+export interface House {
+  id: string
+  title: string
+  location:string
+  numberRooms: number
+  beds: number
+  dollarPrice: string
+  cryptoPrice: string
+  src: string
+}
 
 /*ReqBody*/
 export interface FilterSearchReqBody {
