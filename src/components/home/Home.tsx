@@ -11,6 +11,10 @@ const awsImagesLinks = [
   {name: "https://images.chaincuet.com/logos/ancient-rome.jpeg"},
   {name: "https://images.chaincuet.com/logos/ancient-rome2.jpg"},
   {name: "https://images.chaincuet.com/logos/ancient-rome3.webp"},
+  {name: "https://images.chaincuet.com/logos/roman-empire1.jpeg"},
+  {name: "https://images.chaincuet.com/logos/roman-empire2.webp"},
+  {name: "https://images.chaincuet.com/logos/roman-empire3.jpg"},
+  {name: "https://images.chaincuet.com/logos/roman-empire4.jpg"},
   {name: "https://images.chaincuet.com/logos/mansion1.jpeg"},
   {name: "https://images.chaincuet.com/logos/mansion2.jpg"},
   {name: "https://images.chaincuet.com/logos/mansion3.jpg"},
@@ -151,7 +155,7 @@ const Home = () => {
           <div className={"flex flex-col"}>
             <section aria-label={"filter_search"} className="flex flex-col items-center bg-local h-full xs:p-2 sm:p-2 md:p-2 lg:p-10 xl:p-20 shadow-xl"
                      style={{
-                       backgroundImage: `url(${awsImagesLinks[7].name})`,
+                       backgroundImage: `url(${awsImagesLinks[10].name})`,
                        backgroundSize: "cover",
                        backgroundRepeat: "no-repeat",
                      }}>
