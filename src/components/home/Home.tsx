@@ -139,9 +139,11 @@ const Home = () => {
   };
 
   const onBtnSearch = () => {
-    console.log(filterSearchContext);
-    const estateTypes = filterSearchContext.houseTypes.map(type => `estate_types=${type}`).join('&');
-    router.push(`houses?country=${filterSearchContext.country}&location_area=${filterSearchContext.textAreaSearchValue}&${estateTypes}`)
+    const estateTypes = filterSearchContext.houseTypes.map(type => `&estate_types=${type}`).join('&');
+    if (filterSearchContext.textAreaSearchValue == "") {
+      return router.push(`houses?country=${filterSearchContext.country}${estateTypes}`)
+    }
+    return router.push(`houses?country=${filterSearchContext.country}&location_area=${filterSearchContext.textAreaSearchValue}${estateTypes}`)
   };
 
   return (
