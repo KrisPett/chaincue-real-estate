@@ -1,14 +1,21 @@
-import Home from "@/components/home/Home";
+import HomeView from "@/components/home/HomeView";
 import {Metadata} from "next";
+import {homeViewModelMock} from "@/components/home/HomeViewModelMock";
 
 export const metadata: Metadata = {
   title: 'Chaincue Real Estate',
+  description: ""
 }
 
-export default function Page() {
+const getData = async () => {
+  return homeViewModelMock
+};
+
+export default async function Page() {
+  const data = await getData()
   return (
       < >
-        <Home/>
+        <HomeView data={data}/>
       </>
   )
 }

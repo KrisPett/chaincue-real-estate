@@ -1,8 +1,8 @@
-import {Country, HomeViewModel, House} from "@/components/home/HomeViewModel";
+import {HousesViewModel} from "@/components/houses/HousesViewModel";
 
-export const homeViewModelMock: HomeViewModel = {
+export const HomeViewModelMock: HousesViewModel = {
   countries: [{name: "string"}],
-  recentlyAddedHouses: [
+  houses: [
     {
       id: "3f3c1345-795e-4c8a-82d3-92f80a487b5d",
       title: "Condominium",
@@ -55,6 +55,36 @@ export const homeViewModelMock: HomeViewModel = {
     },
     {
       id: "1ea6a85e-95cd-4a70-816d-eb6b7d24c42f",
+      title: "Condominium",
+      location: "Sweden, Uppsala",
+      numberRooms: 3,
+      beds: 2,
+      dollarPrice: "$969 384",
+      cryptoPrice: "₿32.346",
+      src: "https://images.chaincuet.com/logos/mansion7.jpeg"
+    },
+    {
+      id: "1ga6a85e-95cd-4a70-816d-eb6b7d24c42f",
+      title: "Condominium",
+      location: "Sweden, Uppsala",
+      numberRooms: 3,
+      beds: 2,
+      dollarPrice: "$969 384",
+      cryptoPrice: "₿32.346",
+      src: "https://images.chaincuet.com/logos/mansion7.jpeg"
+    },
+    {
+      id: "1ha6a85e-95cd-4a70-816d-eb6b7d24c42f",
+      title: "Condominium",
+      location: "Sweden, Uppsala",
+      numberRooms: 3,
+      beds: 2,
+      dollarPrice: "$969 384",
+      cryptoPrice: "₿32.346",
+      src: "https://images.chaincuet.com/logos/mansion5.jpg"
+    },
+    {
+      id: "1ka6a85e-95cd-4a70-816d-eb6b7d24c42f",
       title: "Condominium",
       location: "Sweden, Uppsala",
       numberRooms: 3,
