@@ -2,18 +2,17 @@ import {House} from "@/components/home/HomeViewModel";
 import {useRouter} from "next/navigation";
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 
 interface RecentlyAddedHouseItemProps {
   house: House
 }
 
 export const HouseItem = (props: RecentlyAddedHouseItemProps) => {
-  const router = useRouter();
 
   return (
-      <div className="h-full flex flex-col items-start border-2 border-amber-600 rounded p-2 btn shadow-md
-       hover:border-amber-500 hover:bg-zinc-50 bg-white xxs:w-full normal-case"
-           onClick={() => router.push(`/house/${props.house.id}`)}>
+      <Link href={`/house/${props.house.id}`}
+            className="h-full flex flex-col items-start border-2 border-amber-600 rounded p-2 btn shadow-md hover:border-amber-500 hover:bg-zinc-50 bg-white xxs:w-full normal-case">
         <div className={""}>
           <Image
               className="xxs:h-40 xs:h-72 sm:h-80 md:h-40 lg:h-40 shadow-md"
@@ -39,6 +38,6 @@ export const HouseItem = (props: RecentlyAddedHouseItemProps) => {
             className={"text-amber-600 font-bold"}>{props.house.cryptoPrice}</span>
           </span>
         </p>
-      </div>
+      </Link>
   )
 }
