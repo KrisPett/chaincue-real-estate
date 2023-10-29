@@ -12,9 +12,8 @@ export const HouseItem = (props: RecentlyAddedHouseItemProps) => {
 
   return (
       <div className="h-full flex flex-col items-start border-2 border-amber-600 rounded p-2 btn shadow-md
-       hover:border-amber-500 hover:bg-zinc-50
-          bg-white xxs:w-full normal-case
-      " onClick={() => router.push(`/house/${props.house.id}`)}>
+       hover:border-amber-500 hover:bg-zinc-50 bg-white xxs:w-full normal-case"
+           onClick={() => router.push(`/house/${props.house.id}`)}>
         <div className={""}>
           <Image
               className="xxs:h-40 xs:h-72 sm:h-80 md:h-40 lg:h-40 shadow-md"

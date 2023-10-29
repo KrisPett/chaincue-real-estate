@@ -93,5 +93,65 @@ export const HomeViewModelMock: HousesViewModel = {
       cryptoPrice: "₿32.346",
       src: "https://images.chaincuet.com/logos/mansion7.jpeg"
     },
+    {
+      id: "1ta6a85e-95cd-4a70-816d-eb6b7d24c42f",
+      title: "Condominium",
+      location: "Sweden, Uppsala",
+      numberRooms: 3,
+      beds: 2,
+      dollarPrice: "$969 384",
+      cryptoPrice: "₿32.346",
+      src: "https://images.chaincuet.com/logos/mansion7.jpeg"
+    },
+    {
+      id: "1ya6a85e-95cd-4a70-816d-eb6b7d24c42f",
+      title: "Condominium",
+      location: "Sweden, Uppsala",
+      numberRooms: 3,
+      beds: 2,
+      dollarPrice: "$969 384",
+      cryptoPrice: "₿32.346",
+      src: "https://images.chaincuet.com/logos/mansion7.jpeg"
+    },
+    {
+      id: "1ua6a85e-95cd-4a70-816d-eb6b7d24c42f",
+      title: "Condominium",
+      location: "Sweden, Uppsala",
+      numberRooms: 3,
+      beds: 2,
+      dollarPrice: "$969 384",
+      cryptoPrice: "₿32.346",
+      src: "https://images.chaincuet.com/logos/mansion7.jpeg"
+    },
+    {
+      id: "1ia6a85e-95cd-4a70-816d-eb6b7d24c42f",
+      title: "Condominium",
+      location: "Sweden, Uppsala",
+      numberRooms: 3,
+      beds: 2,
+      dollarPrice: "$969 384",
+      cryptoPrice: "₿32.346",
+      src: "https://images.chaincuet.com/logos/mansion7.jpeg"
+    },
+    {
+      id: "1oa6a85e-95cd-4a70-816d-eb6b7d24c42f",
+      title: "Condominium",
+      location: "Sweden, Uppsala",
+      numberRooms: 3,
+      beds: 2,
+      dollarPrice: "$969 384",
+      cryptoPrice: "₿32.346",
+      src: "https://images.chaincuet.com/logos/mansion7.jpeg"
+    },
+    {
+      id: "1pa6a85e-95cd-4a70-816d-eb6b7d24c42f",
+      title: "Condominium",
+      location: "Sweden, Uppsala",
+      numberRooms: 3,
+      beds: 2,
+      dollarPrice: "$969 384",
+      cryptoPrice: "₿32.346",
+      src: "https://images.chaincuet.com/logos/mansion7.jpeg"
+    },
   ]
 }
