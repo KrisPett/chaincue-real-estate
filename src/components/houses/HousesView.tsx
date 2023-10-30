@@ -33,7 +33,7 @@ const HousesView = (props: HousesViewProps) => {
     const selectedSortOption = event.currentTarget.value
     const currentParams = new URLSearchParams(window.location.search)
     const country = currentParams.get('country')
-    const locationArea = currentParams.get('location_area')
+    const locationArea = currentParams.get('location_area') || ""
     const estateTypes = currentParams.getAll('estate_types')
     const sortQuery = `&sort=${selectedSortOption}`
     const updatedUrl = `/houses?country=${country}&location_area=${locationArea}${estateTypes.map(type => `&estate_types=${type}`).join('')}${sortQuery}`
