@@ -1,7 +1,6 @@
 import React from 'react';
 import HousesView from "@/components/houses/HousesView";
 import {Metadata} from "next";
-import {homeViewModelMock} from "@/components/home/HomeViewModelMock";
 import {HomeViewModelMock} from "@/components/houses/HousesViewModelMock";
 
 export const metadata: Metadata = {

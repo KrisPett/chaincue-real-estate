@@ -1,14 +1,15 @@
-import {HouseTypes} from "@/components/home/HomeViewModel";
-import React, {useState} from "react";
+import {FilterSearchReqBody, HouseTypes} from "@/components/home/HomeViewModel";
+import React, {useEffect, useState} from "react";
 
 interface FilterButtonProps {
   title: string
   houseTypes: HouseTypes
   setFilterSearchContext: (houseTypes: (prevState: any) => any) => void
+  filterSearchContext:  FilterSearchReqBody
 }
 
 export const SearchFilterButtonItem = (props: FilterButtonProps) => {
-  const [isSelected, setIsSelected] = useState(false);
+  const [isSelected, setIsSelected] = useState(props.filterSearchContext.houseTypes.includes(props.houseTypes));
 
   const onClickAddHouseTypesIfNotExistsOrRemove = (houseTypes: HouseTypes) => {
     setIsSelected(!isSelected);
@@ -23,6 +24,10 @@ export const SearchFilterButtonItem = (props: FilterButtonProps) => {
       };
     });
   };
+
+  useEffect(() => {
+    setIsSelected(props.filterSearchContext.houseTypes.includes(props.houseTypes));
+  }, [props.filterSearchContext.houseTypes, props.houseTypes]);
 
   return (
       <button onClick={() => onClickAddHouseTypesIfNotExistsOrRemove(props.houseTypes)}

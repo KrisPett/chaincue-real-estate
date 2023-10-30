@@ -1,6 +1,6 @@
 "use client"
-import {useRouter} from "next/navigation";
-import React, {useState} from "react";
+import {useRouter, useSearchParams} from "next/navigation";
+import React, {useEffect, useState} from "react";
 import {FilterSearchReqBody, HouseTypes} from "@/components/home/HomeViewModel";
 import {SearchFilterButtonItem} from "@/lib/SearchFilterButtonItem";
 import Divider from "@/lib/Divider";
@@ -12,14 +12,31 @@ interface SearchAreaProps {
 
 export const SearchArea = (props: SearchAreaProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams()
 
-  const [text, setText] = useState("");
+  const [text, setText] = useState(searchParams.get('location_area') || "");
+  const [defaultCountrySelected, setDefaultCountrySelected] = useState(searchParams.get('country') || "ANY");
   const [textLines] = useState(1);
+
   const [filterSearchContext, setFilterSearchContext] = useState<FilterSearchReqBody>({
     country: "ANY",
-    textAreaSearchValue: "",
-    houseTypes: []
+    textAreaSearchValue: searchParams.get('location_area') || "",
+    houseTypes: searchParams.getAll('estate_types') || []
   });
+
+  useEffect(() => {
+    const country = searchParams.get('country') || "ANY";
+    const estateTypes = searchParams.getAll('estate_types') || [];
+    const textFromParam = searchParams.get('location_area') || ""
+    setText(textFromParam)
+    setDefaultCountrySelected(country)
+    setFilterSearchContext({
+      country: country,
+      textAreaSearchValue: textFromParam,
+      houseTypes: estateTypes
+    });
+
+  }, [searchParams]);
 
   const handleTextareaOnKeydown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const isEnterPressed = event.key === "Enter";
@@ -70,7 +87,7 @@ export const SearchArea = (props: SearchAreaProps) => {
           <section aria-label={"select-country"} className={"md:w-3/12"}>
             <select id="countries"
                     className="bg-gray-50 border border-amber-600 text-amber-700 text-sm rounded focus:ring-amber-600 focus:border-amber-600 block w-full p-2.5 hover:border-amber-400"
-                    defaultValue={"ANY"}
+                    defaultValue={defaultCountrySelected}
                     onChange={event => onChangeOption(event)}
             >
               <option value={"ANY"}>Any Country</option>
@@ -95,19 +112,33 @@ export const SearchArea = (props: SearchAreaProps) => {
 
           <section aria-label={"filter_btn"} className={"grid md:grid-cols-4 lg:grid-cols-7 gap-4"}>
             <SearchFilterButtonItem title={"Condominium"} houseTypes={HouseTypes.CONDOMINIUM}
-                                    setFilterSearchContext={setFilterSearchContext}/>
+                                    setFilterSearchContext={setFilterSearchContext}
+                                    filterSearchContext={filterSearchContext}
+            />
             <SearchFilterButtonItem title={"Villa"} houseTypes={HouseTypes.VILLA}
-                                    setFilterSearchContext={setFilterSearchContext}/>
+                                    setFilterSearchContext={setFilterSearchContext}
+                                    filterSearchContext={filterSearchContext}
+            />
             <SearchFilterButtonItem title={"TownHouse"} houseTypes={HouseTypes.TOWNHOUSE}
-                                    setFilterSearchContext={setFilterSearchContext}/>
+                                    setFilterSearchContext={setFilterSearchContext}
+                                    filterSearchContext={filterSearchContext}
+            />
             <SearchFilterButtonItem title={"Vacation home"} houseTypes={HouseTypes.VACATION_HOME}
-                                    setFilterSearchContext={setFilterSearchContext}/>
+                                    setFilterSearchContext={setFilterSearchContext}
+                                    filterSearchContext={filterSearchContext}
+            />
             <SearchFilterButtonItem title={"Estates and Farms"} houseTypes={HouseTypes.ESTATES_AND_FARMS}
-                                    setFilterSearchContext={setFilterSearchContext}/>
+                                    setFilterSearchContext={setFilterSearchContext}
+                                    filterSearchContext={filterSearchContext}
+            />
             <SearchFilterButtonItem title={"Land"} houseTypes={HouseTypes.LAND}
-                                    setFilterSearchContext={setFilterSearchContext}/>
+                                    setFilterSearchContext={setFilterSearchContext}
+                                    filterSearchContext={filterSearchContext}
+            />
             <SearchFilterButtonItem title={"Other Houses"} houseTypes={HouseTypes.OTHER_HOUSES}
-                                    setFilterSearchContext={setFilterSearchContext}/>
+                                    setFilterSearchContext={setFilterSearchContext}
+                                    filterSearchContext={filterSearchContext}
+            />
           </section>
 
           <section aria-label={"divider"} className={"mt-8"}>
