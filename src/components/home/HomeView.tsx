@@ -1,8 +1,7 @@
 "use client"
 import React, {useState} from 'react';
-import {HomeViewModel} from "@/components/home/HomeViewModel";
+import {FilterSearchReqBody, HomeViewModel} from "@/components/home/HomeViewModel";
 import Divider from "@/lib/Divider";
-import {homeViewModelMock} from "@/components/home/HomeViewModelMock";
 import {HouseItem} from "@/lib/HouseItem";
 import {SearchArea} from "@/lib/SearchArea";
 
@@ -29,6 +28,13 @@ interface HomeViewProps {
 const HomeView = (props: HomeViewProps) => {
   const [homeViewModel, setHomeViewModel] = useState<HomeViewModel>(props.data);
 
+  const [filterSearchContext, setFilterSearchContext] = useState<FilterSearchReqBody>({
+    country: "ANY",
+    textAreaSearchValue: "",
+    houseTypes: [],
+    sort: ""
+  });
+
   return (
       <main className={"flex"}>
         <div className={"w-full"}>
@@ -40,7 +46,7 @@ const HomeView = (props: HomeViewProps) => {
                        backgroundSize: "cover",
                        backgroundRepeat: "no-repeat",
                      }}>
-              <SearchArea isShadow={true}/>
+              <SearchArea filterSearchContext={filterSearchContext} setFilterSearchContext={setFilterSearchContext} isShadow={true}/>
             </section>
 
             <section aria-label={"recently_added_houses_text"} className={"flex justify-center p-2"}>

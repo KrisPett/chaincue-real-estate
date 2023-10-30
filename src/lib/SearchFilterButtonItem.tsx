@@ -4,16 +4,17 @@ import React, {useEffect, useState} from "react";
 interface FilterButtonProps {
   title: string
   houseTypes: HouseTypes
-  setFilterSearchContext: (houseTypes: (prevState: any) => any) => void
-  filterSearchContext:  FilterSearchReqBody
+  setFilterSearchContext: (houseTypes: (prevState: FilterSearchReqBody) => FilterSearchReqBody) => void
+  filterSearchContext: FilterSearchReqBody
 }
 
 export const SearchFilterButtonItem = (props: FilterButtonProps) => {
-  const [isSelected, setIsSelected] = useState(props.filterSearchContext.houseTypes.includes(props.houseTypes));
+  const [isSelected, setIsSelected] = useState<boolean>(props.filterSearchContext && props.filterSearchContext.houseTypes.includes(props.houseTypes));
+  // const [isSelected, setIsSelected] = useState<boolean>(false);
 
   const onClickAddHouseTypesIfNotExistsOrRemove = (houseTypes: HouseTypes) => {
     setIsSelected(!isSelected);
-    props.setFilterSearchContext((prevState) => {
+    props.setFilterSearchContext(prevState => {
       const houseTypeString = houseTypes.toString();
       const updatedHouseTypes = prevState.houseTypes.includes(houseTypeString)
           ? prevState.houseTypes.filter((type: string) => type !== houseTypeString)
@@ -26,8 +27,9 @@ export const SearchFilterButtonItem = (props: FilterButtonProps) => {
   };
 
   useEffect(() => {
-    setIsSelected(props.filterSearchContext.houseTypes.includes(props.houseTypes));
-  }, [props.filterSearchContext.houseTypes, props.houseTypes]);
+    if (props.filterSearchContext)
+      setIsSelected(props.filterSearchContext.houseTypes.includes(props.houseTypes));
+  }, [props.filterSearchContext, props.houseTypes]);
 
   return (
       <button onClick={() => onClickAddHouseTypesIfNotExistsOrRemove(props.houseTypes)}

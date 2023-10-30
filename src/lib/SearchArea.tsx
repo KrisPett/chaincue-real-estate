@@ -1,13 +1,15 @@
 "use client"
 import {useRouter, useSearchParams} from "next/navigation";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {FilterSearchReqBody, HouseTypes} from "@/components/home/HomeViewModel";
 import {SearchFilterButtonItem} from "@/lib/SearchFilterButtonItem";
 import Divider from "@/lib/Divider";
 import Button2 from "@/lib/Button2";
 
 interface SearchAreaProps {
-  isShadow: boolean
+  isShadow: boolean,
+  setFilterSearchContext: (filterSearchContext: (prevState: any) => any) => void,
+  filterSearchContext: FilterSearchReqBody
 }
 
 export const SearchArea = (props: SearchAreaProps) => {
@@ -18,65 +20,52 @@ export const SearchArea = (props: SearchAreaProps) => {
   const [defaultCountrySelected, setDefaultCountrySelected] = useState(searchParams.get('country') || "ANY");
   const [textLines] = useState(1);
 
-  const [filterSearchContext, setFilterSearchContext] = useState<FilterSearchReqBody>({
-    country: "ANY",
-    textAreaSearchValue: searchParams.get('location_area') || "",
-    houseTypes: searchParams.getAll('estate_types') || []
-  });
-
-  useEffect(() => {
-    const country = searchParams.get('country') || "ANY";
-    const estateTypes = searchParams.getAll('estate_types') || [];
-    const textFromParam = searchParams.get('location_area') || ""
-    setText(textFromParam)
-    setDefaultCountrySelected(country)
-    setFilterSearchContext({
-      country: country,
-      textAreaSearchValue: textFromParam,
-      houseTypes: estateTypes
-    });
-
-  }, [searchParams]);
-
   const handleTextareaOnKeydown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const isEnterPressed = event.key === "Enter";
+
     if (isEnterPressed) {
       event.preventDefault();
-    }
 
-    if (isEnterPressed) {
-      setFilterSearchContext(prevState => ({
+      const newText = event.currentTarget.value;
+      const estateTypes = props.filterSearchContext.houseTypes.map(type => `estate_types=${type}`).join('&');
+
+      const baseQuery = `houses?country=${props.filterSearchContext.country}`;
+      const locationQuery = newText === "" ? '' : `&location_area=${newText}`;
+      const queryParams = estateTypes ? `&${estateTypes}` : '';
+
+      const url = `${baseQuery}${locationQuery}${queryParams}`;
+
+      router.push(url);
+
+      props.setFilterSearchContext(prevState => ({
         ...prevState,
-        textAreaSearchValue: text
+        textAreaSearchValue: newText
       }));
-      const estateTypes = filterSearchContext.houseTypes.map(type => `&estate_types=${type}`).join('&');
-      if (event.currentTarget.value == "") {
-        return router.push(`houses?country=${filterSearchContext.country}${estateTypes}`)
-      }
-      return router.push(`houses?country=${filterSearchContext.country}&location_area=${event.currentTarget.value}${estateTypes}`)
     }
-  }
+  };
 
   const handleTextareaOnBlur = () => {
-    setFilterSearchContext(prevState => ({
+    props.setFilterSearchContext(prevState => ({
       ...prevState,
       textAreaSearchValue: text
     }));
   }
 
   const onChangeOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilterSearchContext(prevState => ({
+    props.setFilterSearchContext(prevState => ({
       ...prevState,
       country: event.target.value
     }));
   };
 
   const onBtnSearch = () => {
-    const estateTypes = filterSearchContext.houseTypes.map(type => `&estate_types=${type}`).join('&');
-    if (filterSearchContext.textAreaSearchValue == "") {
-      return router.push(`houses?country=${filterSearchContext.country}${estateTypes}`)
-    }
-    return router.push(`houses?country=${filterSearchContext.country}&location_area=${filterSearchContext.textAreaSearchValue}${estateTypes}`)
+    const estateTypes = props.filterSearchContext.houseTypes.map(type => `estate_types=${type}`).join('&');
+    const baseQuery = `houses?country=${props.filterSearchContext.country}`;
+    const locationQuery = props.filterSearchContext.textAreaSearchValue === "" ? '' : `&location_area=${props.filterSearchContext.textAreaSearchValue}`;
+    const queryParams = estateTypes ? `&${estateTypes}` : '';
+
+    const url = `${baseQuery}${locationQuery}${queryParams}`;
+    return router.push(url);
   };
 
   return (
@@ -112,32 +101,32 @@ export const SearchArea = (props: SearchAreaProps) => {
 
           <section aria-label={"filter_btn"} className={"grid md:grid-cols-4 lg:grid-cols-7 gap-4"}>
             <SearchFilterButtonItem title={"Condominium"} houseTypes={HouseTypes.CONDOMINIUM}
-                                    setFilterSearchContext={setFilterSearchContext}
-                                    filterSearchContext={filterSearchContext}
+                                    setFilterSearchContext={props.setFilterSearchContext}
+                                    filterSearchContext={props.filterSearchContext}
             />
             <SearchFilterButtonItem title={"Villa"} houseTypes={HouseTypes.VILLA}
-                                    setFilterSearchContext={setFilterSearchContext}
-                                    filterSearchContext={filterSearchContext}
+                                    setFilterSearchContext={props.setFilterSearchContext}
+                                    filterSearchContext={props.filterSearchContext}
             />
             <SearchFilterButtonItem title={"TownHouse"} houseTypes={HouseTypes.TOWNHOUSE}
-                                    setFilterSearchContext={setFilterSearchContext}
-                                    filterSearchContext={filterSearchContext}
+                                    setFilterSearchContext={props.setFilterSearchContext}
+                                    filterSearchContext={props.filterSearchContext}
             />
             <SearchFilterButtonItem title={"Vacation home"} houseTypes={HouseTypes.VACATION_HOME}
-                                    setFilterSearchContext={setFilterSearchContext}
-                                    filterSearchContext={filterSearchContext}
+                                    setFilterSearchContext={props.setFilterSearchContext}
+                                    filterSearchContext={props.filterSearchContext}
             />
             <SearchFilterButtonItem title={"Estates and Farms"} houseTypes={HouseTypes.ESTATES_AND_FARMS}
-                                    setFilterSearchContext={setFilterSearchContext}
-                                    filterSearchContext={filterSearchContext}
+                                    setFilterSearchContext={props.setFilterSearchContext}
+                                    filterSearchContext={props.filterSearchContext}
             />
             <SearchFilterButtonItem title={"Land"} houseTypes={HouseTypes.LAND}
-                                    setFilterSearchContext={setFilterSearchContext}
-                                    filterSearchContext={filterSearchContext}
+                                    setFilterSearchContext={props.setFilterSearchContext}
+                                    filterSearchContext={props.filterSearchContext}
             />
             <SearchFilterButtonItem title={"Other Houses"} houseTypes={HouseTypes.OTHER_HOUSES}
-                                    setFilterSearchContext={setFilterSearchContext}
-                                    filterSearchContext={filterSearchContext}
+                                    setFilterSearchContext={props.setFilterSearchContext}
+                                    filterSearchContext={props.filterSearchContext}
             />
           </section>
 

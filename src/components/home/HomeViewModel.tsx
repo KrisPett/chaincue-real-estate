@@ -23,6 +23,7 @@ export interface FilterSearchReqBody {
   country: string
   textAreaSearchValue: string
   houseTypes: string[]
+  sort: string
 }
 
 /*Enums*/

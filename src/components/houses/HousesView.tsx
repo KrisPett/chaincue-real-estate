@@ -1,22 +1,40 @@
 "use client"
-import React from 'react';
+import React, {useState} from 'react';
 import {SearchArea} from "@/lib/SearchArea";
 import {HousesViewModel} from "@/components/houses/HousesViewModel";
 import {HouseItem} from "@/lib/HouseItem";
+import {useRouter, useSearchParams} from "next/navigation";
+import {FilterSearchReqBody} from "@/components/home/HomeViewModel";
 
 interface HousesViewProps {
   data: HousesViewModel
 }
 
 const HousesView = (props: HousesViewProps) => {
+  const [defaultSort, setDefaultSort] = useState();
+  const router = useRouter();
+  const searchParams = useSearchParams()
 
+  const [filterSearchContext, setFilterSearchContext] = useState<FilterSearchReqBody>({
+    country: searchParams.get('country') || "ANY",
+    textAreaSearchValue: searchParams.get('location_area') || "",
+    houseTypes: searchParams.getAll('estate_types') || [],
+    sort: ""
+  });
+  console.log(filterSearchContext)
+  console.log(filterSearchContext)
   const onChangeOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    let value = event.currentTarget.value;
+    router.push(`&sort=${value}`)
+    console.log(event.currentTarget.value);
+    // router=dwdawdaw
   };
 
   return (
       <div className={"flex flex-col"}>
         <section className={"flex flex-col items-center xxs:p-2 xs:p-2 sm:p-2 md:p-2"}>
-          <SearchArea isShadow={false}/>
+          <SearchArea filterSearchContext={filterSearchContext} setFilterSearchContext={setFilterSearchContext}
+                      isShadow={false}/>
         </section>
 
         <section aria-label={"select-country"} className={"flex flex-col items-center xxs:p-2 xs:p-2 sm:p-2 md:p-2"}>
@@ -28,9 +46,9 @@ const HousesView = (props: HousesViewProps) => {
                     defaultValue={"RECENTLY"}
                     onChange={event => onChangeOption(event)}
             >
-              <option value={"RECENTLY"}>Recently</option>
-              <option value="SWEDEN">Max Price</option>
-              <option value="SPAIN">Min Price</option>
+              <option value={"featured"}>Featured</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
             </select>
           </div>
 
