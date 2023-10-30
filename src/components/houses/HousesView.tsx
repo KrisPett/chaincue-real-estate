@@ -14,7 +14,7 @@ const HousesView = (props: HousesViewProps) => {
   const searchParams = useSearchParams()
   const router = useRouter();
 
-  const [defaultSort, setDefaultSort] = useState(searchParams.get('sort') || "featured");
+  const [defaultSort] = useState(searchParams.get('sort') || "featured");
 
   const [filterSearchContext, setFilterSearchContext] = useState<FilterSearchReqBody>({
     country: searchParams.get('country') || "ANY",
