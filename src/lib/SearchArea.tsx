@@ -32,8 +32,9 @@ export const SearchArea = (props: SearchAreaProps) => {
       const baseQuery = `houses?country=${props.filterSearchContext.country}`;
       const locationQuery = newText === "" ? '' : `&location_area=${newText}`;
       const queryParams = estateTypes ? `&${estateTypes}` : '';
+      const sortQuery = props.filterSearchContext.sort ? `&sort=${props.filterSearchContext.sort}` : '';
 
-      const url = `${baseQuery}${locationQuery}${queryParams}`;
+      const url = `${baseQuery}${locationQuery}${queryParams}${sortQuery}`;
 
       router.push(url);
 
@@ -63,8 +64,9 @@ export const SearchArea = (props: SearchAreaProps) => {
     const baseQuery = `houses?country=${props.filterSearchContext.country}`;
     const locationQuery = props.filterSearchContext.textAreaSearchValue === "" ? '' : `&location_area=${props.filterSearchContext.textAreaSearchValue}`;
     const queryParams = estateTypes ? `&${estateTypes}` : '';
+    const sortQuery = props.filterSearchContext.sort ? `&sort=${props.filterSearchContext.sort}` : '';
 
-    const url = `${baseQuery}${locationQuery}${queryParams}`;
+    const url = `${baseQuery}${locationQuery}${queryParams}${sortQuery}`;
     return router.push(url);
   };
 

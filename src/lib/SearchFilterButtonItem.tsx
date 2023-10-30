@@ -1,5 +1,6 @@
 import {FilterSearchReqBody, HouseTypes} from "@/components/home/HomeViewModel";
 import React, {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 
 interface FilterButtonProps {
   title: string
@@ -9,8 +10,9 @@ interface FilterButtonProps {
 }
 
 export const SearchFilterButtonItem = (props: FilterButtonProps) => {
+  let router = useRouter();
+
   const [isSelected, setIsSelected] = useState<boolean>(props.filterSearchContext && props.filterSearchContext.houseTypes.includes(props.houseTypes));
-  // const [isSelected, setIsSelected] = useState<boolean>(false);
 
   const onClickAddHouseTypesIfNotExistsOrRemove = (houseTypes: HouseTypes) => {
     setIsSelected(!isSelected);
