@@ -57,6 +57,18 @@ export const SearchArea = (props: SearchAreaProps) => {
       ...prevState,
       country: event.target.value
     }));
+
+    if (window.location.pathname.includes("houses")) {
+      const estateTypes = props.filterSearchContext.houseTypes.map(type => `estate_types=${type}`).join('&');
+      const baseQuery = `houses?country=${event.target.value}`;
+      const locationQuery = props.filterSearchContext.textAreaSearchValue === "" ? '' : `&location_area=${props.filterSearchContext.textAreaSearchValue}`;
+      const queryParams = estateTypes ? `&${estateTypes}` : '';
+      const sortQuery = props.filterSearchContext.sort ? `&sort=${props.filterSearchContext.sort}` : '';
+
+      const url = `${baseQuery}${locationQuery}${queryParams}${sortQuery}`;
+      return router.push(url);
+    }
+
   };
 
   const onBtnSearch = () => {
