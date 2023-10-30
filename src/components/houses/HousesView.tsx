@@ -25,7 +25,6 @@ const HousesView = (props: HousesViewProps) => {
 
   const onChangeOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.currentTarget.value;
-    console.log(value)
     setFilterSearchContext(prevState => ({
       ...prevState,
       sort: value
@@ -40,8 +39,7 @@ const HousesView = (props: HousesViewProps) => {
     const updatedUrl = `/houses?country=${country}&location_area=${locationArea}${estateTypes.map(type => `&estate_types=${type}`).join('')}${sortQuery}`
     router.push(updatedUrl);
   }
-  console.log(filterSearchContext)
-  console.log(searchParams.get('sort'))
+
   return (
       <div className={"flex flex-col"}>
         <section className={"flex flex-col items-center xxs:p-2 xs:p-2 sm:p-2 md:p-2"}>
