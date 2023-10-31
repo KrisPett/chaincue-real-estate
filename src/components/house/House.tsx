@@ -62,7 +62,7 @@ const House = (props: HouseProps) => {
             <div className={"flex gap-1"}>
               <div>
                 <Button onClick={() => setOpen(true)} title={"Images"}/>
-                {/*<ImageModal open={open} setOpen={setOpen} images={housePageDTO.images}/>*/}
+                <ImageModal open={open} setOpen={setOpen} images={housePageDTO.images}/>
               </div>
             </div>
           </section>
