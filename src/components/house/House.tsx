@@ -41,7 +41,8 @@ const House = (props: HouseProps) => {
           </section>
 
           <section className={"max-w-6xl"}>
-            <button className={"h-full flex p-0 btn border-none hover:bg-transparent bg-transparent"} onClick={() => setOpen(true)}>
+            <button className={"h-full flex p-0 btn border-none hover:bg-transparent bg-transparent"}
+                    onClick={() => setOpen(true)}>
               <Image
                   className={"shadow-md rounded"}
                   src={housePageDTO.images[0].url}
