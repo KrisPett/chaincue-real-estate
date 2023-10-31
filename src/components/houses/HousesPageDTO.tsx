@@ -1,4 +1,4 @@
-export interface HousesViewModel {
+export interface HousesPageDTO {
   countries: Country[]
   houses: House[]
 }

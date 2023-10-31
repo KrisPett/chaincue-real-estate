@@ -1,15 +1,21 @@
 import React from 'react';
 import {Metadata} from "next";
-import HouseView from "@/components/house/HouseView";
+import House from "@/components/house/House";
+import {housePageDTO} from "@/components/house/HousePageDTOMock";
 
 export const metadata: Metadata = {
   title: 'Chaincue Real Estate',
 }
 
-export default function Page() {
+const getData = async () => {
+  return housePageDTO
+};
+
+export default async function Page() {
+  const data = await getData()
   return (
       <>
-        <HouseView/>
+        <House data={data}/>
       </>
   )
 }

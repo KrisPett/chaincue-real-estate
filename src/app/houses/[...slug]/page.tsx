@@ -1,7 +1,7 @@
 import React from 'react';
-import HousesView from "@/components/houses/HousesView";
+import Houses from "@/components/houses/Houses";
 import {Metadata} from "next";
-import {HomeViewModelMock} from "@/components/houses/HousesViewModelMock";
+import {housesPageDTO} from "@/components/houses/HousesPageDTOMock";
 
 export const metadata: Metadata = {
   title: 'Chaincue Real Estate',
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 }
 
 const getData = async () => {
-  return HomeViewModelMock
+  return housesPageDTO
 };
 
 export default async function Page() {
@@ -17,7 +17,7 @@ export default async function Page() {
 
   return (
       <>
-        <HousesView data={data}/>
+        <Houses data={data}/>
       </>
   )
 }

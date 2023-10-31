@@ -1,16 +1,16 @@
 "use client"
 import React, {useState} from 'react';
 import {SearchArea} from "@/lib/SearchArea";
-import {HousesViewModel} from "@/components/houses/HousesViewModel";
+import {HousesPageDTO} from "@/components/houses/HousesPageDTO";
 import {HouseItem} from "@/lib/HouseItem";
 import {useRouter, useSearchParams} from "next/navigation";
 import {FilterSearchReqBody} from "@/components/home/HomeViewModel";
 
 interface HousesViewProps {
-  data: HousesViewModel
+  data: HousesPageDTO
 }
 
-const HousesView = (props: HousesViewProps) => {
+const Houses = (props: HousesViewProps) => {
   const searchParams = useSearchParams()
   const router = useRouter();
 
@@ -74,4 +74,4 @@ const HousesView = (props: HousesViewProps) => {
   )
 }
 
-export default HousesView;
+export default Houses;
