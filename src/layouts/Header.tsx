@@ -4,9 +4,20 @@ import chaincueLogo from "../assets/images/chaincue-real-estate-logo.png";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import Button from "@/lib/Button";
+import {signIn, signOut, useSession} from "next-auth/react";
 
 const Header = () => {
   const router = useRouter();
+  const {data: session} = useSession();
+  console.log(session)
+
+  const handleSignOut = async () => {
+    if (session) {
+      const post_logout_redirect_uri = process.env.NEXT_PUBLIC_CLIENT_URL;
+      const logoutUrl = `https://auth.chaincuet.com/auth/realms/real-estate/protocol/openid-connect/logout?id_token_hint=${session.id_token}&post_logout_redirect_uri=${post_logout_redirect_uri}`;
+      signOut().then(() => router.replace(logoutUrl));
+    }
+  };
 
   return (
       <header
@@ -28,7 +39,40 @@ const Header = () => {
             </Link>
           </div>
           <div className={"mr-2"}>
-            <Button onClick={() => console.log("button")} title={"Sign in"}/>
+
+            <section className={`${session ? "hidden" : "block"}`}>
+              <Button onClick={() => signIn('keycloak')} title={"Sign in"}/>
+            </section>
+
+            <section onClick={() => router.push("/settings")} aria-label={"profile-dropdown"}
+                     className={`${!session ? "hidden" : "block"}`}>
+              <div className={""}>
+                <div className="dropdown-hover dropdown dropdown-end">
+                  <label tabIndex={0}
+                         className="btn-ghost border-2 border-amber-500 rounded-xl hover:border-amber-500 btn text-amber-700 font-normal normal-case">
+                    {session?.user.email}
+                  </label>
+                  <ul tabIndex={0}
+                      className="dropdown-content rounded bg-zinc-50 opacity-10 ">
+                    <li className={""}>
+                      <Link href={"/settings"} replace
+                            className={"btn-ghost font-normal btn text-base capitalize text-gray-600 hover:text-amber-600 w-40"}>
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                          className={"btn-ghost btn text-base font-normal capitalize text-gray-600 hover:text-amber-600 w-40"}
+                          onClick={() => handleSignOut()}>
+                        Sign out
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+
           </div>
         </div>
       </header>
