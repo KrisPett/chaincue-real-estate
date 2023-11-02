@@ -10,15 +10,16 @@ import {getSession, signIn, signOut, useSession} from "next-auth/react";
 const Header = () => {
   const router = useRouter();
   const {data: session} = useSession();
-  console.log(session)
 
   const handleSignOut = async () => {
-    let s = await getSession();
-    console.log(s)
+    const s = await getSession();
     if (s && s.id_token) {
       const post_logout_redirect_uri = process.env.NEXT_PUBLIC_CLIENT_URL;
       const logoutUrl = `https://auth.chaincuet.com/auth/realms/real-estate/protocol/openid-connect/logout?id_token_hint=${s.id_token}&post_logout_redirect_uri=${post_logout_redirect_uri}`;
       signOut().then(() => router.replace(logoutUrl));
+    }
+    if (!s?.id_token) {
+      console.log(s)
     }
   };
 
@@ -47,20 +48,22 @@ const Header = () => {
               <Button onClick={() => signIn('keycloak')} title={"Sign in"}/>
             </section>
 
-            <section onClick={() => router.push("/settings")} aria-label={"profile-dropdown"}
+            <section aria-label={"profile-dropdown"}
                      className={`${!session ? "hidden" : "block"}`}>
               <div className={""}>
                 <div className="dropdown-hover dropdown dropdown-end">
                   <label tabIndex={0}
-                         className="btn-ghost border-2 border-amber-500 rounded-xl hover:border-amber-500 btn text-amber-700 font-normal normal-case">
+                         className="btn-ghost border-2 border-amber-500 rounded-xl hover:border-amber-500 btn text-amber-700 font-normal normal-case"
+                         onClick={() => router.push("/account")}
+                  >
                     {session?.user.email}
                   </label>
                   <ul tabIndex={0}
                       className="dropdown-content rounded bg-zinc-50 opacity-10 ">
                     <li className={""}>
-                      <Link href={"/settings"} replace
+                      <Link href={"/account"} replace
                             className={"btn-ghost font-normal btn text-base capitalize text-gray-600 hover:text-amber-600 w-40"}>
-                        Profile
+                        Account
                       </Link>
                     </li>
                     <li>

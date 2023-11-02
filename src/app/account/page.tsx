@@ -1,6 +1,6 @@
 import React from "react";
-import Settings from "@/components/settings/Settings";
 import {Metadata} from "next";
+import Account from "@/components/account/Account";
 
 export const metadata: Metadata = {
   title: 'Chaincue Real Estate',
@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-      <main className="flex">
-        <Settings/>
+      <main>
+        <Account/>
       </main>
   )
 }
