@@ -4,6 +4,6 @@ version: '3.9'
 services:
   chaincue_real_estate:
     container_name: chaincue_real_estate
-    image: ghcr.io/krispett/chaincue-real-estate:main
+    image: chaincue_real_estate:latest
     ports:
       - "3001:3000"

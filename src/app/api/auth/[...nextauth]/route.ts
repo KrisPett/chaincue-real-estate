@@ -1,5 +1,5 @@
 import KeycloakProvider from "next-auth/providers/keycloak";
-import NextAuth, {Session} from "next-auth";
+import NextAuth, {AuthOptions, Session} from "next-auth";
 import {JWT} from "next-auth/jwt";
 import * as process from "process";
 import {decodeJwt} from "@/lib/JwtUtilities";
@@ -50,7 +50,7 @@ const refreshAccessToken = async (token: JWT): Promise<JWT> => {
       });
 }
 
-export const handler = NextAuth({
+const authOptions: AuthOptions = {
   providers: [keycloak],
   secret: process.env.NEXTAUTH_SECRET,
   session: {maxAge: 36000},
@@ -92,6 +92,7 @@ export const handler = NextAuth({
       return session
     },
   },
-});
+};
 
-export {handler as GET, handler as POST }
+const handler = NextAuth(authOptions);
+export {handler as GET, handler as POST}
