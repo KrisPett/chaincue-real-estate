@@ -1,10 +1,11 @@
+"use client"
 import React from "react";
 import Image from "next/image";
 import chaincueLogo from "../assets/images/chaincue-real-estate-logo.png";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import Button from "@/lib/Button";
-import {signIn, signOut, useSession} from "next-auth/react";
+import {getSession, signIn, signOut, useSession} from "next-auth/react";
 
 const Header = () => {
   const router = useRouter();
@@ -12,9 +13,11 @@ const Header = () => {
   console.log(session)
 
   const handleSignOut = async () => {
-    if (session) {
+    let s = await getSession();
+    console.log(s)
+    if (s && s.id_token) {
       const post_logout_redirect_uri = process.env.NEXT_PUBLIC_CLIENT_URL;
-      const logoutUrl = `https://auth.chaincuet.com/auth/realms/real-estate/protocol/openid-connect/logout?id_token_hint=${session.id_token}&post_logout_redirect_uri=${post_logout_redirect_uri}`;
+      const logoutUrl = `https://auth.chaincuet.com/auth/realms/real-estate/protocol/openid-connect/logout?id_token_hint=${s.id_token}&post_logout_redirect_uri=${post_logout_redirect_uri}`;
       signOut().then(() => router.replace(logoutUrl));
     }
   };
