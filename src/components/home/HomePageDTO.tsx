@@ -1,4 +1,4 @@
-export interface HomeViewModel {
+export interface HomePageDTO {
   countries: Country[]
   recentlyAddedHouses: House[]
 }

@@ -1,4 +1,4 @@
-import {FilterSearchReqBody, HouseTypes} from "@/components/home/HomeViewModel";
+import {FilterSearchReqBody, HouseTypes} from "@/components/home/HomePageDTO";
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 

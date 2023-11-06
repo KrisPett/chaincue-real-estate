@@ -1,6 +1,6 @@
 "use client"
 import React, {useState} from 'react';
-import {FilterSearchReqBody, HomeViewModel} from "@/components/home/HomeViewModel";
+import {FilterSearchReqBody, HomePageDTO} from "@/components/home/HomePageDTO";
 import Divider from "@/lib/Divider";
 import {HouseItem} from "@/lib/HouseItem";
 import {SearchArea} from "@/lib/SearchArea";
@@ -22,11 +22,11 @@ const awsImagesLinks = [
 ]
 
 interface HomeViewProps {
-  data: HomeViewModel
+  data: HomePageDTO
 }
 
-const HomeView = (props: HomeViewProps) => {
-  const [homeViewModel, setHomeViewModel] = useState<HomeViewModel>(props.data);
+const HomePage = (props: HomeViewProps) => {
+  const [homeViewModel, setHomeViewModel] = useState<HomePageDTO>(props.data);
 
   const [filterSearchContext, setFilterSearchContext] = useState<FilterSearchReqBody>({
     country: "ANY",
@@ -79,4 +79,4 @@ const HomeView = (props: HomeViewProps) => {
   )
 }
 
-export default HomeView
+export default HomePage

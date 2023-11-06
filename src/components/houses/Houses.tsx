@@ -4,7 +4,7 @@ import {SearchArea} from "@/lib/SearchArea";
 import {HousesPageDTO} from "@/components/houses/HousesPageDTO";
 import {HouseItem} from "@/lib/HouseItem";
 import {useRouter, useSearchParams} from "next/navigation";
-import {FilterSearchReqBody} from "@/components/home/HomeViewModel";
+import {FilterSearchReqBody} from "@/components/home/HomePageDTO";
 
 interface HousesViewProps {
   data: HousesPageDTO

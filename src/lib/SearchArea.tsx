@@ -1,7 +1,7 @@
 "use client"
 import {useRouter, useSearchParams} from "next/navigation";
 import React, {useState} from "react";
-import {FilterSearchReqBody, HouseTypes} from "@/components/home/HomeViewModel";
+import {FilterSearchReqBody, HouseTypes} from "@/components/home/HomePageDTO";
 import {SearchFilterButtonItem} from "@/lib/SearchFilterButtonItem";
 import Divider from "@/lib/Divider";
 import Button2 from "@/lib/Button2";

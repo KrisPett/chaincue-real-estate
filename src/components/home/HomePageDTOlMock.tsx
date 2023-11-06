@@ -1,6 +1,6 @@
-import {Country, HomeViewModel, House} from "@/components/home/HomeViewModel";
+import {Country, HomePageDTO, House} from "@/components/home/HomePageDTO";
 
-export const homeViewModelMock: HomeViewModel = {
+export const homePageDTOlMock: HomePageDTO = {
   countries: [{name: "string"}],
   recentlyAddedHouses: [
     {

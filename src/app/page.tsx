@@ -1,6 +1,6 @@
-import HomeView from "@/components/home/HomeView";
+import HomePage from "@/components/home/HomePage";
 import {Metadata} from "next";
-import {homeViewModelMock} from "@/components/home/HomeViewModelMock";
+import {homePageDTOlMock} from "@/components/home/HomePageDTOlMock";
 
 export const metadata: Metadata = {
   title: 'Chaincue Real Estate',
@@ -8,14 +8,14 @@ export const metadata: Metadata = {
 }
 
 const getData = async () => {
-  return homeViewModelMock
+  return homePageDTOlMock
 };
 
 export default async function Page() {
   const data = await getData()
   return (
       < >
-        <HomeView data={data}/>
+        <HomePage data={data}/>
       </>
   )
 }
