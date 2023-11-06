@@ -1,4 +1,4 @@
-import {Country, HomePageDTO, House} from "@/components/home/HomePageDTO";
+import {HomePageDTO} from "@/components/home/HomePageDTO";
 
 export const homePageDTOlMock: HomePageDTO = {
   countries: [{name: "string"}],

@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: ""
 }
 
+const CLIENT_DOMAIN = process.env.CLIENT_DOMAIN
+
 const getData = async () => {
   return housesPageDTO
 };

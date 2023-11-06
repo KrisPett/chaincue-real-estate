@@ -1,6 +1,8 @@
 declare namespace NodeJS {
   interface ProcessEnv {
     NEXT_PUBLIC_CLIENT_URL: string
+    BACKEND_URL_ENDPOINT: string
+    CLIENT_DOMAIN: string
     NEXT_PUBLIC_AWS_GATEWAY_URL_CHATBOT: string
     NEXT_PUBLIC_AWS_GATEWAY_URL_IMAGEBOT: string
     NEXT_PUBLIC_AWS_GATEWAY_URL_IMAGEBOT_FILTER_IMAGES: string
