@@ -13,7 +13,7 @@ interface HousesViewProps {
 const Houses = (props: HousesViewProps) => {
   const searchParams = useSearchParams()
   const router = useRouter();
-
+  console.log(props.data)
   const [defaultSort] = useState(searchParams.get('sort') || "featured");
 
   const [filterSearchContext, setFilterSearchContext] = useState<FilterSearchReqBody>({

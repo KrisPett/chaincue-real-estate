@@ -28,7 +28,6 @@ interface HomeViewProps {
 
 const HomePage = (props: HomeViewProps) => {
   const [homeViewModel, setHomeViewModel] = useState<HomePageDTO>(props.data);
-  console.log(homeViewModel)
 
   const [filterSearchContext, setFilterSearchContext] = useState<FilterSearchReqBody>({
     country: "ANY",
