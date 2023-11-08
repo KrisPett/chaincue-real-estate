@@ -4,6 +4,7 @@ import {FilterSearchReqBody, HomePageDTO} from "@/components/home/HomePageDTO";
 import Divider from "@/lib/Divider";
 import {HouseItem} from "@/lib/HouseItem";
 import {SearchArea} from "@/lib/SearchArea";
+import {getSession, useSession} from "next-auth/react";
 
 const awsImagesLinks = [
   {name: "https://images.chaincuet.com/logos/ancient-rome.jpeg"},
@@ -28,6 +29,7 @@ interface HomeViewProps {
 const HomePage = (props: HomeViewProps) => {
   const [homeViewModel, setHomeViewModel] = useState<HomePageDTO>(props.data);
   console.log(homeViewModel)
+
   const [filterSearchContext, setFilterSearchContext] = useState<FilterSearchReqBody>({
     country: "ANY",
     textAreaSearchValue: "",

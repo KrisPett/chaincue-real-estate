@@ -50,7 +50,7 @@ const refreshAccessToken = async (token: JWT): Promise<JWT> => {
       });
 }
 
-const authOptions: AuthOptions = {
+export const authOptions: AuthOptions = {
   providers: [keycloak],
   secret: process.env.NEXTAUTH_SECRET,
   session: {maxAge: 36000},

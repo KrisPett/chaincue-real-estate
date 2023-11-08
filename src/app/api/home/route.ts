@@ -9,7 +9,6 @@ const handleResponse = async (response: Response, successStatus = 200) => {
           {status: 401, headers: {"Content-Type": "application/json"}}
       );
     }
-
     const responseBody = await response.json();
     return new Response(JSON.stringify(responseBody), {
       status: response.ok ? successStatus : response.status,
@@ -34,9 +33,9 @@ export async function GET(request: Request) {
     const res = await fetch(`${port}/${requestMapping}`, {
       method: "GET",
       headers: {Authorization: authorization},
-    });
+    })
 
-    return await handleResponse(res);
+    return await handleResponse(res)
   } catch (error) {
     return handleResponse(new Response(null), 500);
   }
