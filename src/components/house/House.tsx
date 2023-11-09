@@ -15,7 +15,7 @@ interface HouseProps {
 const House = (props: HouseProps) => {
   const [housePageDTO, setHousePageDTO] = useState<HousePageDTO>(props.data);
   const router = useRouter();
-
+  console.log(props.data)
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -93,9 +93,9 @@ const House = (props: HouseProps) => {
           <section className={"flex max-w-lg"}>
             <div>
               <p className={"font-bold"}>Contact Broker: </p>
-              <p>{housePageDTO.broker.name}</p>
-              <p>{housePageDTO.broker.phoneNumber}</p>
-              <p>{housePageDTO.broker.email}</p>
+              <p>{housePageDTO.broker && housePageDTO.broker.name}</p>
+              <p>{housePageDTO.broker && housePageDTO.broker.phoneNumber}</p>
+              <p>{housePageDTO.broker && housePageDTO.broker.email}</p>
             </div>
           </section>
 

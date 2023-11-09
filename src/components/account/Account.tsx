@@ -3,8 +3,13 @@ import React, {useEffect, useState} from 'react';
 import {getSession, signIn, useSession} from "next-auth/react";
 import Button from "@/lib/Button";
 import {useRouter} from "next/navigation";
+import {AccountPageDTO} from "@/components/account/AccountPageDTO";
 
-const Account = () => {
+interface AccountProps {
+  data: AccountPageDTO
+}
+
+const Account = (props: AccountProps) => {
   const {data: session} = useSession();
   const router = useRouter();
 
