@@ -25,14 +25,9 @@ const handleResponse = async (response: Response, successStatus = 200) => {
 
 export async function GET(request: Request) {
   try {
-    // const authorization = request.headers.get("authorization");
-    // if (!authorization) {
-    //   return handleResponse(new Response(null), 401);
-    // }
 
     const res = await fetch(`${port}/${requestMapping}`, {
       method: "GET",
-      // headers: {Authorization: authorization},
     })
 
     return await handleResponse(res)
