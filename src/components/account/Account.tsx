@@ -14,6 +14,7 @@ const Account = (props: AccountProps) => {
   const router = useRouter();
 
   const [email, setEmail] = useState<string>(session ? session.user.email : "");
+  console.log(props.data)
 
   useEffect(() => {
     if (session) setEmail(session.user.email)

@@ -15,7 +15,7 @@ interface HouseProps {
 const House = (props: HouseProps) => {
   const [housePageDTO, setHousePageDTO] = useState<HousePageDTO>(props.data);
   const router = useRouter();
-  console.log(props.data)
+
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
