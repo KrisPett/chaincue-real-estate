@@ -61,7 +61,6 @@ const Houses = (props: HousesViewProps) => {
               <option value="price-desc">Price: High to Low</option>
             </select>
           </div>
-
         </section>
 
         <section aria-label={"recently_added_houses"} className={"flex justify-center p-2"}>

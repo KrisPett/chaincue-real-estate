@@ -31,7 +31,7 @@ const House = (props: HouseProps) => {
         </React.Fragment>
     ));
   };
-
+  console.log(props.data)
   return (
       <main className={"flex flex-col items-center"}>
         <div className={"flex flex-col gap-5 mt-5 p-5 bg-zinc-400 bg-opacity-10 rounded"}>
