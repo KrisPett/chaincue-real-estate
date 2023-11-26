@@ -45,7 +45,7 @@ const House = (props: HouseProps) => {
                     onClick={() => setOpen(true)}>
               <Image
                   className={"shadow-md rounded"}
-                  src={housePageDTO.images[0].url}
+                  src={housePageDTO.images ? housePageDTO.images[0].url : ""}
                   alt=""
                   width={10000}
                   height={100}

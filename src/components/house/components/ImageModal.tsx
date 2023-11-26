@@ -50,7 +50,7 @@ const ImageModal = ({open, setOpen, images}: ModalProps) => {
                     <Dialog.Panel
                         className="overflow-y-auto max-h-screen rounded transition-all xxs:max-w-xs xs:max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-3xl xl:max-w-5xl 2xl:max-w-7xl">
                       <div className="">
-                        {images.map(value => (
+                        {images && images.map(value => (
                             <div key={value.id}>
                               <Image src={value.url} alt="user_icon" width={1000} height={1000}/>
                             </div>
