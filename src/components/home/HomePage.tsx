@@ -35,7 +35,7 @@ const HomePage = (props: HomeViewProps) => {
     houseTypes: [],
     sort: ""
   });
-
+  console.log(homeViewModel)
   return (
       <main className={"flex"}>
         <div className={"w-full"}>
