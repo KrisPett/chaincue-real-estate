@@ -70,7 +70,7 @@ const HomePage = (props: HomeViewProps) => {
             <section aria-label={"recently_added_houses"} className={"flex justify-center mt-10 p-2"}>
               <div
                   className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 "}>
-                {homeViewModel.recentlyAddedHouses
+                {homeViewModel.recentlyAddedHouses && homeViewModel.recentlyAddedHouses
                     .map(house => <div key={house.id}><HouseItem house={house}/></div>)}
               </div>
             </section>
