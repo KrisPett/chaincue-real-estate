@@ -29,7 +29,7 @@ const Account = (props: AccountProps) => {
       router.replace(url)
     }
   };
-
+  console.log(session?.access_token)
   return (<>
         {session !== null ? <>
           <div className={"flex justify-center gap-5 mt-10"}>
