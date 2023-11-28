@@ -1,5 +1,5 @@
 const port = process.env.BACKEND_URL_ENDPOINT
-const requestMapping = "account"
+const requestMapping = "user/account"
 
 const handleResponse = async (response: Response, successStatus = 200) => {
   try {
