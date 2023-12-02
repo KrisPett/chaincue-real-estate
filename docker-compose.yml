@@ -7,4 +7,4 @@ services:
     container_name: chaincue_real_estate
     image: chaincue_real_estate:latest
     ports:
-      - "3001:3000"
+      - "3000:3000"
