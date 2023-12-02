@@ -35,6 +35,7 @@ jobs:
           echo KEYCLOAK_SECRET=${{ secrets.KEYCLOAK_SECRET }} >> .env
           echo KEYCLOAK_ISSUER=${{ secrets.KEYCLOAK_ISSUER }} >> .env
           echo BACKEND_URL_ENDPOINT=${{ secrets.BACKEND_URL_ENDPOINT }} >> .env
+          echo CLIENT_DOMAIN=${{ secrets.CLIENT_DOMAIN }} >> .env
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
