@@ -1,18 +1,25 @@
 "use client"
-import React, {useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {SearchArea} from "@/lib/SearchArea";
 import {HousesPageDTO} from "@/components/houses/HousesPageDTO";
 import {HouseItem} from "@/lib/HouseItem";
 import {useRouter, useSearchParams} from "next/navigation";
 import {FilterSearchReqBody} from "@/components/home/HomePageDTO";
+import LoadingSpinner from "@/lib/LoadingSpinner";
+import {getData} from "@/components/houses/HousesPageAPI";
 
 interface HousesViewProps {
-  data: HousesPageDTO
+  // data: Promise<HousesPageDTO>
 }
 
 const Houses = (props: HousesViewProps) => {
   const searchParams = useSearchParams()
   const router = useRouter();
+  const [housesPageDTO, setHousesPageDTO] = useState<HousesPageDTO>()
+
+  useEffect(() => {
+      getData().then(data => setHousesPageDTO(data))
+  }, [])
 
   const [defaultSort] = useState(searchParams.get('sort') || "featured");
 
@@ -62,11 +69,11 @@ const Houses = (props: HousesViewProps) => {
             </select>
           </div>
         </section>
-
         <section aria-label={"recently_added_houses"} className={"flex justify-center p-2"}>
           <div
               className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
-            {props.data.houses.map(house => <div key={house.id}><HouseItem house={house}/></div>)}
+            {housesPageDTO ? housesPageDTO.houses.map(house => <div key={house.id}><HouseItem house={house}/></div>) :
+                <LoadingSpinner/>}
           </div>
         </section>
       </div>

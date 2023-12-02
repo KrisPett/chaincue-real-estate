@@ -79,7 +79,7 @@ export const SearchArea = (props: SearchAreaProps) => {
     const sortQuery = props.filterSearchContext.sort ? `&sort=${props.filterSearchContext.sort}` : '';
 
     const url = `${baseQuery}${locationQuery}${queryParams}${sortQuery}`;
-    return router.push(url);
+    router.push(url);
   };
 
   return (

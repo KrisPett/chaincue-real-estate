@@ -1,5 +1,5 @@
 "use client"
-import React, {useState} from 'react';
+import React, {Suspense, useState} from 'react';
 import {FilterSearchReqBody, HomePageDTO} from "@/components/home/HomePageDTO";
 import Divider from "@/lib/Divider";
 import {HouseItem} from "@/lib/HouseItem";
@@ -23,11 +23,11 @@ const awsImagesLinks = [
 ]
 
 interface HomeViewProps {
-  data: HomePageDTO
+  data: HomePageDTO | undefined
 }
 
 const HomePage = (props: HomeViewProps) => {
-  const [homeViewModel, setHomeViewModel] = useState<HomePageDTO>(props.data);
+  const [homeViewModel, setHomeViewModel] = useState<HomePageDTO | undefined>(props.data != undefined ? props.data : undefined);
 
   const [filterSearchContext, setFilterSearchContext] = useState<FilterSearchReqBody>({
     country: "ANY",
@@ -47,7 +47,8 @@ const HomePage = (props: HomeViewProps) => {
                        backgroundSize: "cover",
                        backgroundRepeat: "no-repeat",
                      }}>
-              <SearchArea filterSearchContext={filterSearchContext} setFilterSearchContext={setFilterSearchContext} isShadow={true}/>
+              <SearchArea filterSearchContext={filterSearchContext} setFilterSearchContext={setFilterSearchContext}
+                          isShadow={true}/>
             </section>
 
             <section aria-label={"recently_added_houses_text"} className={"flex justify-center p-2"}>
@@ -66,14 +67,15 @@ const HomePage = (props: HomeViewProps) => {
                 </div>
               </div>
             </section>
-
-            <section aria-label={"recently_added_houses"} className={"flex justify-center mt-10 p-2"}>
-              <div
-                  className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 "}>
-                {homeViewModel.recentlyAddedHouses && homeViewModel.recentlyAddedHouses
-                    .map(house => <div key={house.id}><HouseItem house={house}/></div>)}
-              </div>
-            </section>
+            <Suspense fallback={<p>Loading feed...</p>}>
+              <section aria-label={"recently_added_houses"} className={"flex justify-center mt-10 p-2"}>
+                <div
+                    className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 "}>
+                  {homeViewModel && homeViewModel.recentlyAddedHouses && homeViewModel.recentlyAddedHouses
+                      .map(house => <div key={house.id}><HouseItem house={house}/></div>)}
+                </div>
+              </section>
+            </Suspense>
           </div>
         </div>
       </main>
@@ -81,3 +83,11 @@ const HomePage = (props: HomeViewProps) => {
 }
 
 export default HomePage
+
+const CustomFallback = () => {
+  return (
+      <div>
+        <p>Data is not available. Please wait...</p>
+      </div>
+  );
+};
