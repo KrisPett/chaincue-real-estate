@@ -7,6 +7,7 @@ import {HouseItem} from "@/lib/HouseItem";
 import {SearchArea} from "@/lib/SearchArea";
 import {getData} from "@/components/home/HomePageAPI";
 import LoadingSpinner from "@/lib/LoadingSpinner";
+import {homePageDTOMock} from "@/components/home/HomePageDTOMock";
 
 const awsImagesLinks = [
   {name: "https://images.chaincuet.com/logos/ancient-rome.jpeg"},
@@ -60,8 +61,9 @@ const HomePage = (props: HomeViewProps) => {
               <div className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12"}>
                 <div className={""}>
                   <section className={"flex flex-col items-center mt-8"}>
-                    <p className={"xxs:text-sm xs:text-xl md:text-3xl text-amber-700"}>Invest In Real Estate, Pay With
-                      Crypto</p>
+                    <p className={"xxs:text-sm xs:text-xl md:text-3xl text-amber-700"}>
+                      Invest In Real Estate, Pay With Crypto
+                    </p>
                   </section>
                   <section aria-label={"divider"} className={"mt-8"}>
                     <Divider/>
@@ -73,7 +75,8 @@ const HomePage = (props: HomeViewProps) => {
               </div>
             </section>
             <section aria-label={"recently_added_houses"} className={"flex justify-center mt-10 p-2"}>
-              <div className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
+              <div
+                  className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
                 {homeViewModel && homeViewModel.recentlyAddedHouses && homeViewModel.recentlyAddedHouses
                     .map(house => <div key={house.id}><HouseItem house={house}/></div>)}
               </div>

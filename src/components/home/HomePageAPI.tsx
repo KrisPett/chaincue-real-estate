@@ -1,6 +1,7 @@
 "use server"
 
 import {HomePageDTO} from "@/components/home/HomePageDTO";
+import {homePageDTOMock} from "@/components/home/HomePageDTOMock";
 
 const CLIENT_DOMAIN = process.env.CLIENT_DOMAIN
 
@@ -14,5 +15,6 @@ export const getData = async (): Promise<HomePageDTO> => {
     return Promise.reject(res)
   }).catch(reason => {
     console.error(reason)
+    return homePageDTOMock
   });
 };

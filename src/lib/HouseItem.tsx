@@ -23,9 +23,11 @@ export const HouseItem = (props: RecentlyAddedHouseItemProps) => {
               priority={true}
           />
         </div>
-        <p className={"text-xl text-amber-700"}>{props.house.title}</p>
         <p className={"text-amber-800 font-normal"}>
           Location: <span className={"text-amber-800"}>{props.house.location}</span>
+        </p>
+        <p className={"text-amber-800 font-normal"}>
+          Type: <span className={"text-amber-800"}>{props.house.type}</span>
         </p>
         <p className={"text-amber-800 font-normal"}>
           Number of Rooms: <span className={"text-amber-800"}>{props.house.numberRooms}</span>
