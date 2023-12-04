@@ -1,4 +1,5 @@
 "use client"
+
 import React, {Suspense, useEffect, useState} from 'react';
 import {FilterSearchReqBody, HomePageDTO} from "@/components/home/HomePageDTO";
 import Divider from "@/lib/Divider";
@@ -40,7 +41,6 @@ const HomePage = (props: HomeViewProps) => {
     getData().then(setHomeViewModel)
   }, [])
 
-  console.log(homeViewModel)
   return (
       <main className={"flex"}>
         <div className={"w-full"}>
@@ -72,16 +72,13 @@ const HomePage = (props: HomeViewProps) => {
                 </div>
               </div>
             </section>
-            <Suspense fallback={<p>Loading feed...</p>}>
-              <section aria-label={"recently_added_houses"} className={"flex justify-center mt-10 p-2"}>
-                <div
-                    className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 "}>
-                  {homeViewModel && homeViewModel.recentlyAddedHouses && homeViewModel.recentlyAddedHouses
-                      .map(house => <div key={house.id}><HouseItem house={house}/></div>)}
-                </div>
-              </section>
-              {homeViewModel == undefined && <LoadingSpinner/>}
-            </Suspense>
+            <section aria-label={"recently_added_houses"} className={"flex justify-center mt-10 p-2"}>
+              <div className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
+                {homeViewModel && homeViewModel.recentlyAddedHouses && homeViewModel.recentlyAddedHouses
+                    .map(house => <div key={house.id}><HouseItem house={house}/></div>)}
+              </div>
+            </section>
+            {!homeViewModel && <div className={`${!homeViewModel ? "pb-96" : ""}`}><LoadingSpinner/></div>}
           </div>
         </div>
       </main>

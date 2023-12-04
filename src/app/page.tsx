@@ -1,8 +1,6 @@
 import HomePage from "@/components/home/HomePage";
 import {Metadata} from "next";
-import {homePageDTOlMock} from "@/components/home/HomePageDTOlMock";
-import {HomePageDTO} from "@/components/home/HomePageDTO";
-import React, {Suspense, useEffect, useState} from "react";
+import React from "react";
 
 export const metadata: Metadata = {
   title: 'Chaincue Real Estate',
