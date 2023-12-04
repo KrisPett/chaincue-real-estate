@@ -9,7 +9,6 @@ import LoadingSpinner from "@/lib/LoadingSpinner";
 import {getData} from "@/components/houses/HousesPageAPI";
 
 interface HousesViewProps {
-  // data: Promise<HousesPageDTO>
 }
 
 const Houses = (props: HousesViewProps) => {
@@ -18,7 +17,7 @@ const Houses = (props: HousesViewProps) => {
   const [housesPageDTO, setHousesPageDTO] = useState<HousesPageDTO>()
 
   useEffect(() => {
-      getData().then(data => setHousesPageDTO(data))
+    getData().then(setHousesPageDTO)
   }, [])
 
   const [defaultSort] = useState(searchParams.get('sort') || "featured");
@@ -72,10 +71,10 @@ const Houses = (props: HousesViewProps) => {
         <section aria-label={"recently_added_houses"} className={"flex justify-center p-2"}>
           <div
               className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
-            {housesPageDTO ? housesPageDTO.houses.map(house => <div key={house.id}><HouseItem house={house}/></div>) :
-                <LoadingSpinner/>}
+            {housesPageDTO && housesPageDTO.houses.map(house => <div key={house.id}><HouseItem house={house}/></div>)}
           </div>
         </section>
+        {housesPageDTO == undefined && <LoadingSpinner/>}
       </div>
   )
 }

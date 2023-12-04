@@ -1,10 +1,11 @@
 "use client"
-import React, {Suspense, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {FilterSearchReqBody, HomePageDTO} from "@/components/home/HomePageDTO";
 import Divider from "@/lib/Divider";
 import {HouseItem} from "@/lib/HouseItem";
 import {SearchArea} from "@/lib/SearchArea";
-import {getSession, useSession} from "next-auth/react";
+import {getData} from "@/components/home/HomePageAPI";
+import LoadingSpinner from "@/lib/LoadingSpinner";
 
 const awsImagesLinks = [
   {name: "https://images.chaincuet.com/logos/ancient-rome.jpeg"},
@@ -23,11 +24,10 @@ const awsImagesLinks = [
 ]
 
 interface HomeViewProps {
-  data: HomePageDTO | undefined
 }
 
 const HomePage = (props: HomeViewProps) => {
-  const [homeViewModel, setHomeViewModel] = useState<HomePageDTO | undefined>(props.data != undefined ? props.data : undefined);
+  const [homeViewModel, setHomeViewModel] = useState<HomePageDTO | undefined>();
 
   const [filterSearchContext, setFilterSearchContext] = useState<FilterSearchReqBody>({
     country: "ANY",
@@ -35,6 +35,11 @@ const HomePage = (props: HomeViewProps) => {
     houseTypes: [],
     sort: ""
   });
+
+  useEffect(() => {
+    getData().then(setHomeViewModel)
+  }, [])
+
   console.log(homeViewModel)
   return (
       <main className={"flex"}>
@@ -75,6 +80,7 @@ const HomePage = (props: HomeViewProps) => {
                       .map(house => <div key={house.id}><HouseItem house={house}/></div>)}
                 </div>
               </section>
+              {homeViewModel == undefined && <LoadingSpinner/>}
             </Suspense>
           </div>
         </div>
@@ -83,11 +89,3 @@ const HomePage = (props: HomeViewProps) => {
 }
 
 export default HomePage
-
-const CustomFallback = () => {
-  return (
-      <div>
-        <p>Data is not available. Please wait...</p>
-      </div>
-  );
-};

@@ -9,27 +9,10 @@ export const metadata: Metadata = {
   description: ""
 }
 
-const CLIENT_DOMAIN = process.env.CLIENT_DOMAIN
-
-const getData = async (): Promise<HomePageDTO> => {
-  return fetch(`${CLIENT_DOMAIN}/api/home`, {
-    method: "GET",
-    cache: "no-store",
-    next: {tags: ["home"]},
-  }).then(res => {
-    if (res.ok) return res.json();
-    return Promise.reject(res)
-  }).catch(reason => {
-    console.error(reason)
-  });
-};
-
 export default async function Page() {
-  const data = await getData()
-
   return (
       <>
-        <HomePage data={data ? data : homePageDTOlMock}/>
+        <HomePage/>
       </>
   )
 }

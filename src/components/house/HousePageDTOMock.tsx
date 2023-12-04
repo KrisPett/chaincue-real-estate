@@ -26,3 +26,25 @@ export const housePageDTO: HousePageDTO = {
     email: "john@chaincue.com"
   }
 }
+
+export const defaultHousePageDTO: HousePageDTO = {
+  id: "",
+  title: "",
+  type: "",
+  location: "",
+  numberOfRooms: 0,
+  beds: 0,
+  dollarPrice: "",
+  cryptoPrice: "",
+  description: "",
+  images: [
+    {id: "", url: ""},
+  ],
+  broker: {
+    id: "",
+    name: "",
+    phoneNumber: "",
+    email: ""
+  }
+}
+

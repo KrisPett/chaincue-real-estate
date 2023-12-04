@@ -1,3 +1,5 @@
+"use server"
+
 import {HomePageDTO} from "@/components/home/HomePageDTO";
 
 const CLIENT_DOMAIN = process.env.CLIENT_DOMAIN
