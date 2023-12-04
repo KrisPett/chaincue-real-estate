@@ -3,18 +3,24 @@ import React, {useEffect, useState} from 'react';
 import {getSession, signIn, useSession} from "next-auth/react";
 import Button from "@/lib/Button";
 import {useRouter} from "next/navigation";
+import {getData} from "@/components/account/AccountPageAPI";
 import {AccountPageDTO} from "@/components/account/AccountPageDTO";
+import LoadingSpinner from "@/lib/LoadingSpinner";
 
 interface AccountProps {
-  data: AccountPageDTO
 }
 
 const Account = (props: AccountProps) => {
   const {data: session} = useSession();
+  const [accountPage, setAccountPage] = useState<AccountPageDTO>();
+
   const router = useRouter();
 
   const [email, setEmail] = useState<string>(session ? session.user.email : "");
-  console.log(props.data)
+
+  useEffect(() => {
+    getData().then(setAccountPage)
+  }, [])
 
   useEffect(() => {
     if (session) setEmail(session.user.email)
@@ -29,35 +35,37 @@ const Account = (props: AccountProps) => {
       router.replace(url)
     }
   };
-  console.log(session?.access_token)
-  return (<>
-        {session !== null ? <>
-          <div className={"flex justify-center gap-5 mt-10"}>
-            <div className={"flex flex-col gap-5 w-full max-w-screen-md p-1"}>
-              <section>
-                <p className={"text-4xl text-amber-700"}>Account</p>
-              </section>
-              <section>
-                <p className={"text-amber-700"}>Email: {email}</p>
-              </section>
-              <section>
-                <Button title={"Change Password"} onClick={() => onClickChangePassword()}/>
-              </section>
-            </div>
-          </div>
-        </> : <>
-          <div className={"flex justify-center gap-5 mt-10"}>
-            <div className={"flex flex-col gap-5 w-full max-w-screen-md p-1"}>
-              <section>
-                <p className={"text-3xl text-amber-700 text-center"}>Sign in to access account page</p>
-              </section>
-              <section className={`block`}>
-                <Button onClick={() => signIn('keycloak')} title={"Sign in"}/>
-              </section>
-            </div>
-          </div>
-        </>}
 
+  return (
+      accountPage === undefined && session ? <div className={`${"mt-44"}`}><LoadingSpinner/></div> : <>
+        <div>
+          {session !== null ? <>
+            <div className={"flex justify-center gap-5 mt-10"}>
+              <div className={"flex flex-col gap-5 w-full max-w-screen-md p-1"}>
+                <section>
+                  <p className={"text-4xl text-amber-700"}>Account</p>
+                </section>
+                <section>
+                  <p className={"text-amber-700"}>Email: {email}</p>
+                </section>
+                <section>
+                  <Button title={"Change Password"} onClick={() => onClickChangePassword()}/>
+                </section>
+              </div>
+            </div>
+          </> : <>
+            <div className={"flex justify-center gap-5 mt-10"}>
+              <div className={"flex flex-col gap-5 w-full max-w-screen-md p-1"}>
+                <section>
+                  <p className={"text-3xl text-amber-700 text-center"}>Sign in to access account page</p>
+                </section>
+                <section className={`block`}>
+                  <Button onClick={() => signIn('keycloak')} title={"Sign in"}/>
+                </section>
+              </div>
+            </div>
+          </>}
+        </div>
       </>
   );
 };
