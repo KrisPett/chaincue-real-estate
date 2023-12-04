@@ -47,7 +47,7 @@ const Houses = (props: HousesViewProps) => {
   }
 
   return (
-      <div className={"flex flex-col"}>
+      <div className={`flex flex-col ${!housesPageDTO ? "h-screen" : ""}`}>
         <section className={"flex flex-col items-center xxs:p-2 xs:p-2 sm:p-2 md:p-2"}>
           <SearchArea filterSearchContext={filterSearchContext} setFilterSearchContext={setFilterSearchContext}
                       isShadow={false}/>

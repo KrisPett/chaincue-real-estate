@@ -35,7 +35,7 @@ const House = (props: HouseProps) => {
   }
 
   return (
-      <main className={`flex flex-col items-center ${!housePageDTO ? "mt-44" : ""}`}>
+      <main className={`flex flex-col items-center ${!housePageDTO ? "h-screen mt-44" : ""}`}>
         {housePageDTO ? <>
               <div className={"flex flex-col gap-5 mt-5 p-5 bg-zinc-400 bg-opacity-10 rounded"}>
 
