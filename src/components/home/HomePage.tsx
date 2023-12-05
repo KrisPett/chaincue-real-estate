@@ -54,7 +54,8 @@ const HomePage = (props: HomeViewProps) => {
                        backgroundRepeat: "no-repeat",
                      }}>
               <SearchArea filterSearchContext={filterSearchContext} setFilterSearchContext={setFilterSearchContext}
-                          isShadow={true}/>
+                          isShadow={true}
+              />
             </section>
 
             <section aria-label={"recently_added_houses_text"} className={"flex justify-center p-2"}>

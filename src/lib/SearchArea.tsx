@@ -12,7 +12,7 @@ interface SearchAreaProps {
   isShadow: boolean,
   setFilterSearchContext: (filterSearchContext: (prevState: any) => any) => void,
   filterSearchContext: FilterSearchReqBody
-  setHouses: (houses: House[]) => void
+  setHouses?: (houses: House[]) => void
 }
 
 export const SearchArea = (props: SearchAreaProps) => {
