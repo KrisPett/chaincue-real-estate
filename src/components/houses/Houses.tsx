@@ -1,12 +1,12 @@
 "use client"
 import React, {Suspense, useEffect, useState} from 'react';
 import {SearchArea} from "@/lib/SearchArea";
-import {HousesPageDTO} from "@/components/houses/HousesPageDTO";
+import {House, HousesPageDTO} from "@/components/houses/HousesPageDTO";
 import {HouseItem} from "@/lib/HouseItem";
 import {useRouter, useSearchParams} from "next/navigation";
 import {FilterSearchReqBody} from "@/components/home/HomePageDTO";
 import LoadingSpinner from "@/lib/LoadingSpinner";
-import {getData} from "@/components/houses/HousesPageAPI";
+import {fetchSearchHouses, getData} from "@/components/houses/HousesPageAPI";
 
 interface HousesViewProps {
 }
@@ -14,13 +14,15 @@ interface HousesViewProps {
 const Houses = (props: HousesViewProps) => {
   const searchParams = useSearchParams()
   const router = useRouter();
-  const [housesPageDTO, setHousesPageDTO] = useState<HousesPageDTO>()
 
-  useEffect(() => {
-    getData().then(setHousesPageDTO)
-  }, [])
+  const [housesPageDTO, setHousesPageDTO] = useState<HousesPageDTO>()
+  const [houses, setHouses] = useState<House[]>()
 
   const [defaultSort] = useState(searchParams.get('sort') || "featured");
+
+  useEffect(() => {
+    fetchSearchHouses(filterSearchContext).then(setHouses)
+  }, [])
 
   const [filterSearchContext, setFilterSearchContext] = useState<FilterSearchReqBody>({
     country: searchParams.get('country') || "ANY",
@@ -47,10 +49,13 @@ const Houses = (props: HousesViewProps) => {
   }
 
   return (
-      <div className={`flex flex-col ${!housesPageDTO ? "h-screen" : ""}`}>
+      <div className={`flex flex-col ${!houses ? "h-screen" : ""}`}>
         <section className={"flex flex-col items-center xxs:p-2 xs:p-2 sm:p-2 md:p-2"}>
-          <SearchArea filterSearchContext={filterSearchContext} setFilterSearchContext={setFilterSearchContext}
-                      isShadow={false}/>
+          <SearchArea filterSearchContext={filterSearchContext}
+                      setFilterSearchContext={setFilterSearchContext}
+                      isShadow={false}
+                      setHouses={setHouses}
+          />
         </section>
 
         <section aria-label={"select-country"} className={"flex flex-col items-center xxs:p-2 xs:p-2 sm:p-2 md:p-2"}>
@@ -68,13 +73,14 @@ const Houses = (props: HousesViewProps) => {
             </select>
           </div>
         </section>
-        <section aria-label={"recently_added_houses"} className={"flex justify-center p-2"}>
-          <div
-              className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
-            {housesPageDTO && housesPageDTO.houses.map(house => <div key={house.id}><HouseItem house={house}/></div>)}
-          </div>
-        </section>
-        {housesPageDTO == undefined && <LoadingSpinner/>}
+        {houses ? <>
+          <section aria-label={"recently_added_houses"} className={"flex justify-center p-2"}>
+            <div
+                className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
+              {houses.map(house => <div key={house.id}><HouseItem house={house}/></div>)}
+            </div>
+          </section>
+        </> : <LoadingSpinner/>}
       </div>
   )
 }

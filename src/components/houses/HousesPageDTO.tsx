@@ -10,7 +10,8 @@ export interface Country {
 export interface House {
   id: string
   title: string
-  location:string
+  location: string
+  type: string
   numberRooms: number
   beds: number
   dollarPrice: string

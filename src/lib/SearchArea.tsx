@@ -1,15 +1,18 @@
 "use client"
 import {useRouter, useSearchParams} from "next/navigation";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FilterSearchReqBody, HouseTypes} from "@/components/home/HomePageDTO";
 import {SearchFilterButtonItem} from "@/lib/SearchFilterButtonItem";
 import Divider from "@/lib/Divider";
 import Button2 from "@/lib/Button2";
+import {fetchSearchHouses} from "@/components/houses/HousesPageAPI";
+import {House, HousesPageDTO} from "@/components/houses/HousesPageDTO";
 
 interface SearchAreaProps {
   isShadow: boolean,
   setFilterSearchContext: (filterSearchContext: (prevState: any) => any) => void,
   filterSearchContext: FilterSearchReqBody
+  setHouses: (houses: House[]) => void
 }
 
 export const SearchArea = (props: SearchAreaProps) => {
@@ -19,6 +22,10 @@ export const SearchArea = (props: SearchAreaProps) => {
   const [text, setText] = useState(searchParams.get('location_area') || "");
   const [defaultCountrySelected, setDefaultCountrySelected] = useState(searchParams.get('country') || "ANY");
   const [textLines] = useState(1);
+
+  // useEffect(() => {
+  //   fetchSearchHouses(props.filterSearchContext).then(props.setHouses)
+  // }, [])
 
   const handleTextareaOnKeydown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const isEnterPressed = event.key === "Enter";
@@ -71,7 +78,7 @@ export const SearchArea = (props: SearchAreaProps) => {
 
   };
 
-  const onBtnSearch = () => {
+  const onBtnSearch = async () => {
     const estateTypes = props.filterSearchContext.houseTypes.map(type => `estate_types=${type}`).join('&');
     const baseQuery = `houses?country=${props.filterSearchContext.country}`;
     const locationQuery = props.filterSearchContext.textAreaSearchValue === "" ? '' : `&location_area=${props.filterSearchContext.textAreaSearchValue}`;
@@ -79,8 +86,9 @@ export const SearchArea = (props: SearchAreaProps) => {
     const sortQuery = props.filterSearchContext.sort ? `&sort=${props.filterSearchContext.sort}` : '';
 
     const url = `${baseQuery}${locationQuery}${queryParams}${sortQuery}`;
-    router.push(url);
-  };
+    router.push(url)
+    fetchSearchHouses(props.filterSearchContext).then(props.setHouses)
+  }
 
   return (
       <div

@@ -1,5 +1,4 @@
 import {House} from "@/components/home/HomePageDTO";
-import {useRouter} from "next/navigation";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
