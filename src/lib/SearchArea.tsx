@@ -23,10 +23,6 @@ export const SearchArea = (props: SearchAreaProps) => {
   const [defaultCountrySelected, setDefaultCountrySelected] = useState(searchParams.get('country') || "ANY");
   const [textLines] = useState(1);
 
-  // useEffect(() => {
-  //   fetchSearchHouses(props.filterSearchContext).then(props.setHouses)
-  // }, [])
-
   const handleTextareaOnKeydown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const isEnterPressed = event.key === "Enter";
 

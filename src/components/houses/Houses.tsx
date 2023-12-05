@@ -47,7 +47,7 @@ const Houses = (props: HousesViewProps) => {
     const updatedUrl = `/houses?country=${country}&location_area=${locationArea}${estateTypes.map(type => `&estate_types=${type}`).join('')}${sortQuery}`
     router.push(updatedUrl);
   }
-
+  console.log(filterSearchContext)
   return (
       <div className={`flex flex-col ${!houses ? "h-screen" : ""}`}>
         <section className={"flex flex-col items-center xxs:p-2 xs:p-2 sm:p-2 md:p-2"}>
