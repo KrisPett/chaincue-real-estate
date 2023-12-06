@@ -30,17 +30,22 @@ const Header = () => {
           }
       >
         <div className={"flex items-center justify-between py-3"}>
-          <div>
-            <Link href={"/"} className="btn-ghost btn hover:bg-transparent">
-              <Image
-                  src={chaincueLogo}
-                  alt=""
-                  width={300}
-                  height={300}
-                  className="min-w-full"
-                  priority={true}
-              />
-            </Link>
+          <div className={"flex items-center"}>
+            <div className={"hidden md:block"}>
+              <Link href={"/"} className="btn-ghost btn hover:bg-transparent">
+                <Image
+                    src={chaincueLogo}
+                    alt=""
+                    width={300}
+                    height={300}
+                    className="min-w-full"
+                    priority={true}
+                />
+              </Link>
+            </div>
+            <div className={"ml-2"}>
+              <Button onClick={() => router.push("/add-property")} title={"Add Property"}/>
+            </div>
           </div>
           <div className={"mr-2"}>
 
@@ -53,10 +58,10 @@ const Header = () => {
               <div className={""}>
                 <div className="dropdown-hover dropdown dropdown-end">
                   <label tabIndex={0}
-                         className="btn-ghost border-2 border-amber-500 rounded-xl hover:border-amber-500 btn text-amber-700 font-normal normal-case"
+                         className="btn-ghost border-2 border-amber-500 rounded-4xl w-20 text-lg hover:border-amber-500 btn text-amber-700 font-normal normal-case"
                          onClick={() => router.push("/account")}
                   >
-                    {session?.user.email}
+                    {session?.user.email.charAt(0).toUpperCase()}
                   </label>
                   <ul tabIndex={0}
                       className="dropdown-content rounded bg-zinc-50 opacity-10 ">
