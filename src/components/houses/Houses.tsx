@@ -46,7 +46,7 @@ const Houses = (props: HousesViewProps) => {
     const updatedUrl = `/houses?country=${country}&location_area=${locationArea}${estateTypes.map(type => `&estate_types=${type}`).join('')}${sortQuery}`
     router.push(updatedUrl);
   }
-  console.log(data)
+
   return (
       <div className={`flex flex-col ${!data ? "h-screen" : ""}`}>
         <section className={"flex flex-col items-center xxs:p-2 xs:p-2 sm:p-2 md:p-2"}>
@@ -73,14 +73,19 @@ const Houses = (props: HousesViewProps) => {
         </section>
 
         {
-          isPending ? <LoadingSpinner/> : <>
-            <section aria-label={"recently_added_houses"} className={"flex justify-center p-2"}>
-              <div
-                  className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
-                {data && data.map(house => <div key={house.id}><HouseItem house={house}/></div>)}
-              </div>
-            </section>
-          </>
+          isPending ? <LoadingSpinner/> :
+              <>
+                <section aria-label={"recently_added_houses"} className={"flex justify-center p-2"}>
+                  <div
+                      className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
+                    {data && data.length > 0 ? (
+                        data.map(house => <div key={house.id}><HouseItem house={house}/></div>)
+                    ) : (
+                        <p className={"text-amber-700 text-xl"}>No results found</p>
+                    )}
+                  </div>
+                </section>
+              </>
         }
 
       </div>
