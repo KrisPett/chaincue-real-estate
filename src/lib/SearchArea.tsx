@@ -1,23 +1,22 @@
 "use client"
 import {useRouter, useSearchParams} from "next/navigation";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {FilterSearchReqBody, HouseTypes} from "@/components/home/HomePageDTO";
 import {SearchFilterButtonItem} from "@/lib/SearchFilterButtonItem";
 import Divider from "@/lib/Divider";
 import Button2 from "@/lib/Button2";
-import {fetchSearchHouses} from "@/components/houses/HousesPageAPI";
-import {House, HousesPageDTO} from "@/components/houses/HousesPageDTO";
+import {useQueryClient} from "@tanstack/react-query";
 
 interface SearchAreaProps {
   isShadow: boolean,
   setFilterSearchContext: (filterSearchContext: (prevState: any) => any) => void,
   filterSearchContext: FilterSearchReqBody
-  setHouses?: (houses: House[]) => void
 }
 
 export const SearchArea = (props: SearchAreaProps) => {
   const router = useRouter();
   const searchParams = useSearchParams()
+  const queryClient = useQueryClient();
 
   const [text, setText] = useState(searchParams.get('location_area') || "");
   const [defaultCountrySelected, setDefaultCountrySelected] = useState(searchParams.get('country') || "ANY");
@@ -83,7 +82,6 @@ export const SearchArea = (props: SearchAreaProps) => {
 
     const url = `${baseQuery}${locationQuery}${queryParams}${sortQuery}`;
     router.push(url)
-    fetchSearchHouses(props.filterSearchContext).then(props.setHouses)
   }
 
   return (
@@ -109,7 +107,7 @@ export const SearchArea = (props: SearchAreaProps) => {
                         className="textarea-bordered textarea w-full resize-none rounded bg-zinc-50 border-amber-600 bg-opacity-60 hover:border-amber-400
                         focus:ring-1 focus:ring-offset-2 focus:ring-offset-amber-600 focus-visible:border-0 focus:outline-none
                         focus-visible:ring-0 focus-visible:ring-offset-1 focus-visible:ring-offset-orange-30 text-amber-700"
-                        placeholder="Search by place..." onChange={(e) => setText(e.target.value)}
+                        placeholder="Search" onChange={(e) => setText(e.target.value)}
                         rows={textLines}
                         onKeyDown={handleTextareaOnKeydown} value={text}
                         onBlur={event => handleTextareaOnBlur()}

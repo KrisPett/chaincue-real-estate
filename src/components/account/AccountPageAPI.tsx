@@ -1,7 +1,7 @@
 "use server"
 import {AccountPageDTO} from "@/components/account/AccountPageDTO";
 import {getServerSession} from "next-auth";
-import {authOptions} from "@/app/utilities/authOptions";
+import {authOptions} from "@/utilities/authOptions";
 
 const CLIENT_DOMAIN = process.env.CLIENT_DOMAIN
 

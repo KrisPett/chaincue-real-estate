@@ -1,12 +1,12 @@
 "use client"
-import React, {Suspense, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {SearchArea} from "@/lib/SearchArea";
-import {House, HousesPageDTO} from "@/components/houses/HousesPageDTO";
 import {HouseItem} from "@/lib/HouseItem";
 import {useRouter, useSearchParams} from "next/navigation";
 import {FilterSearchReqBody} from "@/components/home/HomePageDTO";
 import LoadingSpinner from "@/lib/LoadingSpinner";
-import {fetchSearchHouses, getData} from "@/components/houses/HousesPageAPI";
+import {fetchSearchHouses} from "@/components/houses/HousesPageAPI";
+import {useQuery} from "@tanstack/react-query";
 
 interface HousesViewProps {
 }
@@ -15,21 +15,20 @@ const Houses = (props: HousesViewProps) => {
   const searchParams = useSearchParams()
   const router = useRouter();
 
-  const [housesPageDTO, setHousesPageDTO] = useState<HousesPageDTO>()
-  const [houses, setHouses] = useState<House[]>()
-
   const [defaultSort] = useState(searchParams.get('sort') || "featured");
-
-  useEffect(() => {
-    fetchSearchHouses(filterSearchContext).then(setHouses)
-  }, [])
-
   const [filterSearchContext, setFilterSearchContext] = useState<FilterSearchReqBody>({
     country: searchParams.get('country') || "ANY",
     textAreaSearchValue: searchParams.get('location_area') || "",
     houseTypes: searchParams.getAll('estate_types') || [],
     sort: searchParams.get('sort') || "featured",
   });
+
+  const {isPending, isError, data, error} = useQuery({
+    queryKey: ['houses', filterSearchContext],
+    queryFn: () => {
+      return fetchSearchHouses(filterSearchContext)
+    },
+  })
 
   const onChangeOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.currentTarget.value;
@@ -47,14 +46,13 @@ const Houses = (props: HousesViewProps) => {
     const updatedUrl = `/houses?country=${country}&location_area=${locationArea}${estateTypes.map(type => `&estate_types=${type}`).join('')}${sortQuery}`
     router.push(updatedUrl);
   }
-  console.log(filterSearchContext)
+  console.log(data)
   return (
-      <div className={`flex flex-col ${!houses ? "h-screen" : ""}`}>
+      <div className={`flex flex-col ${!data ? "h-screen" : ""}`}>
         <section className={"flex flex-col items-center xxs:p-2 xs:p-2 sm:p-2 md:p-2"}>
           <SearchArea filterSearchContext={filterSearchContext}
                       setFilterSearchContext={setFilterSearchContext}
                       isShadow={false}
-                      setHouses={setHouses}
           />
         </section>
 
@@ -73,14 +71,18 @@ const Houses = (props: HousesViewProps) => {
             </select>
           </div>
         </section>
-        {houses ? <>
-          <section aria-label={"recently_added_houses"} className={"flex justify-center p-2"}>
-            <div
-                className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
-              {houses.map(house => <div key={house.id}><HouseItem house={house}/></div>)}
-            </div>
-          </section>
-        </> : <LoadingSpinner/>}
+
+        {
+          isPending ? <LoadingSpinner/> : <>
+            <section aria-label={"recently_added_houses"} className={"flex justify-center p-2"}>
+              <div
+                  className={"xxs:w-full md:w-10/12 xl:w-10/12 2xl:w-6/12 grid xxs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
+                {data && data.map(house => <div key={house.id}><HouseItem house={house}/></div>)}
+              </div>
+            </section>
+          </>
+        }
+
       </div>
   )
 }
