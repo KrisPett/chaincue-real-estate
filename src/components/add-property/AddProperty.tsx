@@ -9,6 +9,7 @@ import Dropzone from "react-dropzone";
 import {useSession} from "next-auth/react";
 import {CreatePropertyReqBody} from "@/components/add-property/AddPropertyDTO";
 import {fetchCreateProperty} from "@/components/add-property/AddPropertyAPI";
+import MintModal from "@/components/add-property/components/MintModal";
 
 const AddProperty = () => {
   const {data: session} = useSession();
@@ -16,8 +17,10 @@ const AddProperty = () => {
   const [title, setTitle] = useState<string>("");
   const [supply, setSupply] = useState<string>("1");
   const [description, setDescription] = useState<string>("");
+  const [open, setOpen] = useState(false)
 
   const onBtnCreate = () => {
+    setOpen(true)
     const reqBody: CreatePropertyReqBody = {
       title: title,
       description: description,
@@ -25,10 +28,21 @@ const AddProperty = () => {
     }
 
     if (session?.access_token) {
-      fetchCreateProperty(session.access_token, reqBody).then(res => {
-        console.log(res)
-      })
+      fetchCreateProperty(session.access_token, reqBody)
+          .then(res => {
+            console.log(res);
+
+            const timeoutId = setTimeout(() => {
+              setOpen(false);
+            }, 30000);
+
+            return () => clearTimeout(timeoutId);
+          })
+          .catch(error => {
+            console.error('Error creating property:', error);
+          });
     }
+
   }
 
   const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +59,7 @@ const AddProperty = () => {
 
   return (
       <main className={`flex flex-col`}>
+
         <div className={"flex justify-center w-full"}>
 
           <div className={"w-96 p-5 flex flex-col gap-1"}>
@@ -89,6 +104,11 @@ const AddProperty = () => {
           </div>
 
         </div>
+
+        <section aria-label={"mint-modal"} className={""}>
+          <MintModal open={open} setOpen={setOpen}/>
+        </section>
+
       </main>
   );
 };
