@@ -1,10 +1,81 @@
-import React from 'react';
+"use client"
+
+import React, {useState} from 'react';
+import Button from "@/lib/Button";
+import {useRouter} from "next/navigation";
+import Textfield from "@/lib/Textfield";
+import TextfieldMulti from "@/lib/TextfieldMulti";
+import Dropzone from "react-dropzone";
 
 const AddProperty = () => {
+  const router = useRouter();
+  const [name, setName] = useState<string>("");
+  const [supply, setSupply] = useState<string>("1");
+  const [description, setDescription] = useState<string>("");
+
+  const onBtnCreate = () => {
+    console.log("onBtnCreate")
+    console.log(name)
+    console.log(supply)
+    console.log(description)
+  }
+
+  const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value)
+  };
+
+  const onChangeSupply = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSupply(event.target.value)
+  };
+
+  const onChangeDescription = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(event.target.value)
+  };
+
   return (
-      <div>
-        AddProperty
-      </div>
+      <main className={`flex flex-col`}>
+        <div className={"flex justify-center w-full"}>
+
+          <div className={"w-96 p-5 flex flex-col gap-1"}>
+
+
+            <section>
+              <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
+                {({getRootProps, getInputProps}) => (
+                    <section {...getRootProps()} className="flex items-center justify-center h-64 border-dotted border border-gray-200 rounded-md bg-gray-50 hover:bg-gray-100 transition-colors duration-200 cursor-pointer">
+                      <div className="text-center">
+                        <input {...getInputProps()} />
+                        <p className="text-gray-500">Drag 'n' drop some files here, or click to select files</p>
+                      </div>
+                    </section>
+                )}
+              </Dropzone>
+
+            </section>
+
+            <section className={"w-32"}>
+              <Button onClick={() => router.back()} title={"Back"}/>
+            </section>
+
+            <section>
+              <Textfield title={"Name"} onChange={event => onChangeTitle(event)}/>
+            </section>
+
+            <section>
+              <Textfield defaultValue={supply} title={"Supply"} onChange={event => onChangeSupply(event)}/>
+            </section>
+
+            <section>
+              <TextfieldMulti onChange={event => onChangeDescription(event)} title={"Description"} placeholder={"Description"}/>
+            </section>
+
+            <section className={"w-32"}>
+              <Button onClick={() => onBtnCreate()} title={"Create"}/>
+            </section>
+          </div>
+
+        </div>
+      </main>
   );
 };
 
