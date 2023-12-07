@@ -38,23 +38,25 @@ const AddProperty = () => {
 
           <div className={"w-96 p-5 flex flex-col gap-1"}>
 
+            <section className={"w-32"}>
+              <Button onClick={() => router.back()} title={"Back"}/>
+            </section>
 
-            <section>
+            <section className={"mt-4"}>
               <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
                 {({getRootProps, getInputProps}) => (
-                    <section {...getRootProps()} className="flex items-center justify-center h-64 border-dotted border border-gray-200 rounded-md bg-gray-50 hover:bg-gray-100 transition-colors duration-200 cursor-pointer">
+                    <section {...getRootProps()} className="
+                    flex items-center justify-center h-64 border-dotted border-2 border-amber-700 rounded-md bg-zinc-50
+                    hover:bg-gray-100 hover:border-amber-600 hover:text-amber-700 hover:border
+                    transition-colors duration-200 cursor-pointer">
                       <div className="text-center">
                         <input {...getInputProps()} />
-                        <p className="text-gray-500">Drag 'n' drop some files here, or click to select files</p>
+                        <p className="text-amber-700">Drag and drop media</p>
                       </div>
                     </section>
                 )}
               </Dropzone>
 
-            </section>
-
-            <section className={"w-32"}>
-              <Button onClick={() => router.back()} title={"Back"}/>
             </section>
 
             <section>
@@ -66,10 +68,11 @@ const AddProperty = () => {
             </section>
 
             <section>
-              <TextfieldMulti onChange={event => onChangeDescription(event)} title={"Description"} placeholder={"Description"}/>
+              <TextfieldMulti onChange={event => onChangeDescription(event)} title={"Description"}
+                              placeholder={"Description"}/>
             </section>
 
-            <section className={"w-32"}>
+            <section className={"w-32 mt-4"}>
               <Button onClick={() => onBtnCreate()} title={"Create"}/>
             </section>
           </div>
