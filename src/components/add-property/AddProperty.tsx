@@ -6,22 +6,33 @@ import {useRouter} from "next/navigation";
 import Textfield from "@/lib/Textfield";
 import TextfieldMulti from "@/lib/TextfieldMulti";
 import Dropzone from "react-dropzone";
+import {useSession} from "next-auth/react";
+import {CreatePropertyReqBody} from "@/components/add-property/AddPropertyDTO";
+import {fetchCreateProperty} from "@/components/add-property/AddPropertyAPI";
 
 const AddProperty = () => {
+  const {data: session} = useSession();
   const router = useRouter();
-  const [name, setName] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
   const [supply, setSupply] = useState<string>("1");
   const [description, setDescription] = useState<string>("");
 
   const onBtnCreate = () => {
-    console.log("onBtnCreate")
-    console.log(name)
-    console.log(supply)
-    console.log(description)
+    const reqBody: CreatePropertyReqBody = {
+      title: title,
+      description: description,
+      supply: supply
+    }
+
+    if (session?.access_token) {
+      fetchCreateProperty(session.access_token, reqBody).then(res => {
+        console.log(res)
+      })
+    }
   }
 
   const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value)
+    setTitle(event.target.value)
   };
 
   const onChangeSupply = (event: React.ChangeEvent<HTMLInputElement>) => {
