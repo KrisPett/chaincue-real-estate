@@ -9,22 +9,6 @@ interface ModalProps {
   setOpen: (open: boolean) => void;
 }
 
-const downloadImage = (url: string) => {
-  let fileName = url.split("/").pop();
-  fetch(url)
-      .then(response => response.blob())
-      .then(blob => {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = fileName || "image.png";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      });
-}
-
 const MintModal = ({open, setOpen}: ModalProps) => {
   const [isMetamaskConnected, setIsMetamaskConnected] = useState<boolean>(false);
   const [ethAddress, setEthAddress] = useState<string>("");
@@ -40,13 +24,10 @@ const MintModal = ({open, setOpen}: ModalProps) => {
     }
   }, []);
 
-  const mintNFT = async () => {
-  }
-
   return (
       <div>
         <Transition.Root show={open} as={Fragment}>
-          <Dialog as="div" className="relative" initialFocus={cancelButtonRef} onClose={setOpen}>
+          <Dialog as="div" className="relative" initialFocus={cancelButtonRef} onClose={() => {}}>
             <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-100"
@@ -93,8 +74,9 @@ const MintModal = ({open, setOpen}: ModalProps) => {
                           <div>
                             <div>
                               <p className={"text-amber-700"}>Go to your wallet to approve this transaction</p>
-                              <p className={"text-gray-500 text-sm"}>A blockchain transaction is required to mint NFT
-                                property</p>
+                              <p className={"text-gray-500 text-sm"}>
+                                A blockchain transaction is required to mint NFT property
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -105,8 +87,9 @@ const MintModal = ({open, setOpen}: ModalProps) => {
                           </div>
                           <div>
                             <p className={"text-amber-700"}>Uploading to decentralized server</p>
-                            <p className={"text-gray-500 text-sm"}>Please stay on this page and keep this browser tab
-                              open</p>
+                            <p className={"text-gray-500 text-sm"}>
+                              Please stay on this page and keep this browser tab open
+                            </p>
                           </div>
                         </div>
 

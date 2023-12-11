@@ -1,10 +1,10 @@
 import React from 'react';
-import AddProperty from "@/components/add-property/AddProperty";
+import AddPropertyPage from "@/components/add-property/AddPropertyPage";
 
 const Page = () => {
   return (
       <>
-        <AddProperty/>
+        <AddPropertyPage/>
       </>
   );
 };

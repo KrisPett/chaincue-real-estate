@@ -1,6 +1,7 @@
 "use server"
 
-import {CreatePropertyReqBody} from "@/components/add-property/AddPropertyDTO";
+
+import {CreatePropertyReqBody} from "@/components/add-property/AddPropertyPageDTO";
 
 const BACKEND_URL_ENDPOINT = process.env.BACKEND_URL_ENDPOINT
 const requestMapping = "user/add-property"

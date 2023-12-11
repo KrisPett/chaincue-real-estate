@@ -7,11 +7,12 @@ import Textfield from "@/lib/Textfield";
 import TextfieldMulti from "@/lib/TextfieldMulti";
 import Dropzone from "react-dropzone";
 import {useSession} from "next-auth/react";
-import {CreatePropertyReqBody} from "@/components/add-property/AddPropertyDTO";
-import {fetchCreateProperty} from "@/components/add-property/AddPropertyAPI";
-import MintModal from "@/components/add-property/components/MintModal";
 
-const AddProperty = () => {
+import MintModal from "@/components/add-property/components/MintModal";
+import {CreatePropertyReqBody} from "@/components/add-property/AddPropertyPageDTO";
+import {fetchCreateProperty} from "@/components/add-property/AddPropertyPageAPI";
+
+const AddPropertyPage = () => {
   const {data: session} = useSession();
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
@@ -30,19 +31,18 @@ const AddProperty = () => {
     if (session?.access_token) {
       fetchCreateProperty(session.access_token, reqBody)
           .then(res => {
-            console.log(res);
-
-            const timeoutId = setTimeout(() => {
-              setOpen(false);
-            }, 30000);
-
-            return () => clearTimeout(timeoutId);
+            console.log(res)
           })
           .catch(error => {
             console.error('Error creating property:', error);
           });
     }
+    const timeoutId = setTimeout(() => {
+      setOpen(false);
+      router.push("/add-property/confirmation");
+    }, 10000);
 
+    return () => clearTimeout(timeoutId);
   }
 
   const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,4 +113,4 @@ const AddProperty = () => {
   );
 };
 
-export default AddProperty;
+export default AddPropertyPage;
