@@ -8,6 +8,8 @@ import {SearchArea} from "@/lib/SearchArea";
 import {getData} from "@/components/home/HomePageAPI";
 import LoadingSpinner from "@/lib/LoadingSpinner";
 import {homePageDTOMock} from "@/components/home/HomePageDTOMock";
+import {ethers} from "ethers";
+import {readIntegerValue} from "@/utilities/EthContract";
 
 const awsImagesLinks = [
   {name: "https://images.chaincuet.com/logos/ancient-rome.jpeg"},
@@ -41,6 +43,16 @@ const HomePage = (props: HomeViewProps) => {
   useEffect(() => {
     getData().then(setHomeViewModel)
   }, [])
+
+  const [integerValue, setIntegerValue] = useState(null);
+
+  useEffect(() => {
+    readIntegerValue().then(value => {
+      setIntegerValue(value)
+    });
+  }, []);
+
+  console.log(integerValue)
 
   return (
       <main className={"flex"}>
