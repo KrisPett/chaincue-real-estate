@@ -6,7 +6,7 @@ import {CreatePropertyReqBody} from "@/components/add-property/AddPropertyPageDT
 const BACKEND_URL_ENDPOINT = process.env.BACKEND_URL_ENDPOINT
 const requestMapping = "user/add-property"
 
-export const fetchCreateProperty = async (token: string, reqBody: CreatePropertyReqBody): Promise<string> => {
+export const fetchCreateProperty = async (token: string | undefined, reqBody: CreatePropertyReqBody): Promise<string> => {
   if (!token) {
     throw Error("No access token found")
   }

@@ -15,5 +15,6 @@ declare namespace NodeJS {
     CONTRACT_ADDRESS: string
     NETWORK: string
     INFURA_API_KEY: string
+    WALLET_PRIVATE_KEY: string
   }
 }

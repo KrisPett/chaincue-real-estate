@@ -1,16 +1,25 @@
 "use client"
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import {ConfirmationPage, mockConfirmationPage} from "@/components/add-property/confirmation/ConfirmationPageDTO";
 import Button4 from "@/lib/Button4";
 import {useRouter} from "next/navigation";
+import {readIntegerValue} from "@/utilities/EthContract";
 
 const ConfirmationPage = () => {
   const [confirmationPage, setConfirmationPage] = useState<ConfirmationPage>(mockConfirmationPage)
   const router = useRouter();
+  const [integerValue, setIntegerValue] = useState(null);
 
+  useEffect(() => {
+    readIntegerValue().then(value => {
+      setIntegerValue(value)
+    });
+  }, []);
+
+  console.log(integerValue)
   return (
       <main className={`flex flex-col`}>
         <div className={"flex justify-center w-full p-1"}>

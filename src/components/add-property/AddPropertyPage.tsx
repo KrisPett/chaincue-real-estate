@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "@/lib/Button";
 import {useRouter} from "next/navigation";
 import Textfield from "@/lib/Textfield";
@@ -11,6 +11,7 @@ import {useSession} from "next-auth/react";
 import MintModal from "@/components/add-property/components/MintModal";
 import {CreatePropertyReqBody} from "@/components/add-property/AddPropertyPageDTO";
 import {fetchCreateProperty} from "@/components/add-property/AddPropertyPageAPI";
+import {decreaseValue, increaseValue, readIntegerValue} from "@/utilities/EthContract";
 
 const AddPropertyPage = () => {
   const {data: session} = useSession();
@@ -19,6 +20,9 @@ const AddPropertyPage = () => {
   const [supply, setSupply] = useState<string>("1");
   const [description, setDescription] = useState<string>("");
   const [open, setOpen] = useState(false)
+  const [isConnectedToDecentralizedNetwork, setIsConnectedToDecentralizedNetwork] = useState<boolean>(false);
+  const [isTransactionApprovedFromWallet, setIsTransactionApprovedFromWallet] = useState<boolean>(false);
+  const [isUploadedToDecentralizedNetwork, setIsUploadedToDecentralizedNetwork] = useState<boolean>(false);
 
   const onBtnCreate = () => {
     setOpen(true)
@@ -29,20 +33,19 @@ const AddPropertyPage = () => {
     }
 
     if (session?.access_token) {
-      fetchCreateProperty(session.access_token, reqBody)
-          .then(res => {
-            console.log(res)
-          })
-          .catch(error => {
-            console.error('Error creating property:', error);
-          });
+      increaseValue(20).then(res => {
+        setIsUploadedToDecentralizedNetwork(true)
+        fetchCreateProperty(session.access_token, reqBody)
+            .then(res => {
+              router.push("/add-property/confirmation")
+            })
+            .catch(error => {
+              console.error('Error creating property:', error);
+            });
+      })
+    } else {
+      console.log("no session")
     }
-    const timeoutId = setTimeout(() => {
-      setOpen(false);
-      router.push("/add-property/confirmation");
-    }, 10000);
-
-    return () => clearTimeout(timeoutId);
   }
 
   const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,6 +59,24 @@ const AddPropertyPage = () => {
   const onChangeDescription = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value)
   };
+
+  /*TEST*/
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setIsConnectedToDecentralizedNetwork(true);
+    }, 3000);
+
+    return () => clearTimeout(timeoutId);
+  }, [open]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setIsTransactionApprovedFromWallet(true);
+    }, 5000);
+
+    return () => clearTimeout(timeoutId);
+  }, [open]);
+  /*TEST*/
 
   return (
       <main className={`flex flex-col`}>
@@ -106,7 +127,12 @@ const AddPropertyPage = () => {
         </div>
 
         <section aria-label={"mint-modal"} className={""}>
-          <MintModal open={open} setOpen={setOpen}/>
+          <MintModal open={open}
+                     setOpen={setOpen}
+                     isConnectedToDecentralizedNetwork={isConnectedToDecentralizedNetwork}
+                     isTransactionApprovedFromWallet={isTransactionApprovedFromWallet}
+                     isUploadedToDecentralizedNetwork={isUploadedToDecentralizedNetwork}
+          />
         </section>
 
       </main>
