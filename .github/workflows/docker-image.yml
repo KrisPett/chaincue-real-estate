@@ -36,7 +36,6 @@ jobs:
           echo KEYCLOAK_ISSUER=${{ secrets.KEYCLOAK_ISSUER }} >> .env
           echo BACKEND_URL_ENDPOINT=${{ secrets.BACKEND_URL_ENDPOINT }} >> .env
           echo CLIENT_DOMAIN=${{ secrets.CLIENT_DOMAIN }} >> .env
-          
           echo NETWORK=${{ secrets.NETWORK }} >> .env
           echo INFURA_API_KEY=${{ secrets.INFURA_API_KEY }} >> .env
           echo NEXT_PUBLIC_CONTRACT_ADDRESS=${{ secrets.NEXT_PUBLIC_CONTRACT_ADDRESS }} >> .env
