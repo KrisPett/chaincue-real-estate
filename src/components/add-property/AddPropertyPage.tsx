@@ -1,52 +1,94 @@
 "use client"
 
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Button from "@/lib/Button";
 import {useRouter} from "next/navigation";
 import Textfield from "@/lib/Textfield";
 import TextfieldMulti from "@/lib/TextfieldMulti";
 import Dropzone from "react-dropzone";
-import {useSession} from "next-auth/react";
-
+import {signIn, useSession} from "next-auth/react";
 import MintModal from "@/components/add-property/components/MintModal";
 import {CreatePropertyReqBody} from "@/components/add-property/AddPropertyPageDTO";
 import {fetchCreateProperty} from "@/components/add-property/AddPropertyPageAPI";
-import {decreaseValue, increaseValue, readIntegerValue} from "@/utilities/EthContract";
+import {ethers} from "ethers";
+import {useWeb3Modal, useWeb3ModalAccount, useWeb3ModalProvider} from '@web3modal/ethers/react'
+import Button5 from "@/lib/Button5";
+
+const NEXT_PUBLIC_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
+const NEXT_PUBLIC_ABI = process.env.NEXT_PUBLIC_ABI
 
 const AddPropertyPage = () => {
   const {data: session} = useSession();
   const router = useRouter();
+  const {open} = useWeb3Modal()
+  const {address, chainId, isConnected} = useWeb3ModalAccount()
+  const {walletProvider} = useWeb3ModalProvider()
+
   const [title, setTitle] = useState<string>("");
   const [supply, setSupply] = useState<string>("1");
   const [description, setDescription] = useState<string>("");
-  const [open, setOpen] = useState(false)
+  const [openOnCreateModal, setOpenOnCreateModal] = useState(false)
   const [isConnectedToDecentralizedNetwork, setIsConnectedToDecentralizedNetwork] = useState<boolean>(false);
   const [isTransactionApprovedFromWallet, setIsTransactionApprovedFromWallet] = useState<boolean>(false);
+  const [isTransactionError, setIsTransactionError] = useState<boolean>(false);
+
   const [isUploadedToDecentralizedNetwork, setIsUploadedToDecentralizedNetwork] = useState<boolean>(false);
 
   const onBtnCreate = () => {
-    setOpen(true)
-    const reqBody: CreatePropertyReqBody = {
-      title: title,
-      description: description,
-      supply: supply
-    }
+    setOpenOnCreateModal(true)
+    setIsConnectedToDecentralizedNetwork(false)
+    setIsTransactionApprovedFromWallet(false)
+    setIsTransactionError(false)
+    setIsUploadedToDecentralizedNetwork(false)
 
-    if (session?.access_token) {
-      increaseValue(20).then(res => {
-        setIsUploadedToDecentralizedNetwork(true)
+    increaseValue(20).then(res => {
+    })
+  }
+
+  const increaseValue = async (amount: number) => {
+    if (!isConnected) throw Error("User disconnected")
+
+    if (walletProvider && session) {
+      const ethersProvider = new ethers.BrowserProvider(walletProvider)
+      const signer = await ethersProvider.getSigner()
+      const contract = new ethers.Contract(NEXT_PUBLIC_CONTRACT_ADDRESS, NEXT_PUBLIC_ABI, signer)
+      setIsConnectedToDecentralizedNetwork(true);
+
+      try {
+        const tx = await contract.increaseValue(amount)
+            .then(tx => {
+              setIsTransactionApprovedFromWallet(true);
+              return tx
+            })
+            .catch(reason => {
+              setIsTransactionApprovedFromWallet(false)
+              console.log(reason)
+            });
+        await tx.wait();
+
+        const reqBody: CreatePropertyReqBody = {
+          title: title,
+          description: description,
+          supply: supply
+        }
         fetchCreateProperty(session.access_token, reqBody)
             .then(res => {
-              router.push("/add-property/confirmation")
+              setTimeout(() => {
+                setIsUploadedToDecentralizedNetwork(true)
+                router.push("/add-property/confirmation");
+              }, 2000);
             })
             .catch(error => {
               console.error('Error creating property:', error);
             });
-      })
-    } else {
-      console.log("no session")
+
+      } catch (error) {
+        console.error('Error increasing integer value:', error);
+        setIsUploadedToDecentralizedNetwork(false)
+        setIsTransactionError(true)
+      }
     }
-  }
+  };
 
   const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)
@@ -59,24 +101,6 @@ const AddPropertyPage = () => {
   const onChangeDescription = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value)
   };
-
-  /*TEST*/
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsConnectedToDecentralizedNetwork(true);
-    }, 3000);
-
-    return () => clearTimeout(timeoutId);
-  }, [open]);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsTransactionApprovedFromWallet(true);
-    }, 5000);
-
-    return () => clearTimeout(timeoutId);
-  }, [open]);
-  /*TEST*/
 
   return (
       <main className={`flex flex-col`}>
@@ -120,18 +144,22 @@ const AddPropertyPage = () => {
             </section>
 
             <section className={"w-32 mt-4"}>
-              <Button onClick={() => onBtnCreate()} title={"Create"}/>
+              {!session ? <>
+                <Button5 onClick={() => signIn('keycloak')} title={"Sign in to Unlock NFT Creation"}/>
+              </> : <>
+                <Button onClick={() => onBtnCreate()} title={"Create"}/>
+              </>}
             </section>
           </div>
-
         </div>
 
         <section aria-label={"mint-modal"} className={""}>
-          <MintModal open={open}
-                     setOpen={setOpen}
+          <MintModal open={openOnCreateModal}
+                     setOpen={setOpenOnCreateModal}
                      isConnectedToDecentralizedNetwork={isConnectedToDecentralizedNetwork}
                      isTransactionApprovedFromWallet={isTransactionApprovedFromWallet}
                      isUploadedToDecentralizedNetwork={isUploadedToDecentralizedNetwork}
+                     isTransactionError={isTransactionError}
           />
         </section>
 

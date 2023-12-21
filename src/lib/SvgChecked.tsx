@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CheckedSvg = () => {
+const SvgChecked = () => {
   return (
       <div className={"flex justify-center"}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
@@ -12,4 +12,4 @@ const CheckedSvg = () => {
   );
 };
 
-export default CheckedSvg;
+export default SvgChecked;

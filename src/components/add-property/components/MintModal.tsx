@@ -1,7 +1,8 @@
 import React, {Fragment, useEffect, useRef, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react'
 import LoadingSpinner from "@/lib/LoadingSpinner";
-import CheckedSvg from "@/lib/CheckedSVG";
+import SvgChecked from "@/lib/SvgChecked";
+import SvgError from "@/lib/SvgError";
 
 const isMetamaskInstalled = typeof window !== 'undefined' && typeof window.ethereum !== 'undefined';
 
@@ -11,6 +12,7 @@ interface ModalProps {
   isConnectedToDecentralizedNetwork: boolean
   isTransactionApprovedFromWallet: boolean
   isUploadedToDecentralizedNetwork: boolean
+  isTransactionError: boolean
 }
 
 const MintModal = (props: ModalProps) => {
@@ -32,6 +34,9 @@ const MintModal = (props: ModalProps) => {
       <div>
         <Transition.Root show={props.open} as={Fragment}>
           <Dialog as="div" className="relative" initialFocus={cancelButtonRef} onClose={() => {
+            if (props.isTransactionError) {
+              props.setOpen(false)
+            }
           }}>
             <Transition.Child
                 as={Fragment}
@@ -64,17 +69,19 @@ const MintModal = (props: ModalProps) => {
                         <p className={"text-amber-700 text-2xl"}>Creating your NFT property</p>
                         <div className={"flex items-center"}>
                           <div className={"mr-2 w-10"}>
-                            {props.isConnectedToDecentralizedNetwork ? <CheckedSvg/> : <LoadingSpinner size={"w-10"}/>}
+                            {props.isConnectedToDecentralizedNetwork ? <SvgChecked/> : <LoadingSpinner size={"w-10"}/>}
                           </div>
                           <div>
                             <p className={"text-amber-700"}>Connecting to decentralized server</p>
-                            <p className={"text-gray-500 text-sm"}>This may take a few minutes</p>
+                            <p className={"text-gray-500 text-sm"}>This may take a moment</p>
                           </div>
                         </div>
 
                         <div className={"flex items-center"}>
                           <div className={"mr-2 w-10"}>
-                            {props.isTransactionApprovedFromWallet ? <CheckedSvg/> : <LoadingSpinner size={"w-10"}/>}
+                            {props.isTransactionError ? <SvgError/> : props.isTransactionApprovedFromWallet ?
+                                <SvgChecked/> : <LoadingSpinner size={"w-10"}/>}
+                            {/*{props.isTransactionApprovedFromWallet ? <SvgChecked/> : <LoadingSpinner/>}*/}
                           </div>
                           <div>
                             <div>
@@ -88,7 +95,8 @@ const MintModal = (props: ModalProps) => {
 
                         <div className={"flex items-center"}>
                           <div className={"mr-2 w-10"}>
-                            {props.isUploadedToDecentralizedNetwork ? <CheckedSvg/> : <LoadingSpinner size={"w-10"}/>}
+                            {props.isTransactionError ? <SvgError/> : props.isTransactionApprovedFromWallet ?
+                                <SvgChecked/> : <LoadingSpinner size={"w-10"}/>}
                           </div>
                           <div>
                             <p className={"text-amber-700"}>Uploading to decentralized server</p>
