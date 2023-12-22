@@ -1,5 +1,7 @@
 # docker build . -t chaincue_real_estate && docker compose up
-# docker-compose up
+# docker compose down
+# docker exec -it chaincue_real_estate sh
+
 version: '3.9'
 
 services:
@@ -8,3 +10,5 @@ services:
     image: chaincue_real_estate:latest
     ports:
       - "3000:3000"
+    volumes:
+      - .env:/app/.env
