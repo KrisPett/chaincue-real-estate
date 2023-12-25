@@ -147,7 +147,11 @@ const AddPropertyPage = () => {
               {!session ? <>
                 <Button5 onClick={() => signIn('keycloak')} title={"Sign in to Unlock NFT Creation"}/>
               </> : <>
-                <Button onClick={() => onBtnCreate()} title={"Create"}/>
+                {isConnected ? <>
+                  <Button onClick={() => onBtnCreate()} title={"Create"}/>
+                </> : <>
+                  <Button onClick={() => open()} title={"Connect"}/>
+                </>}
               </>}
             </section>
           </div>
