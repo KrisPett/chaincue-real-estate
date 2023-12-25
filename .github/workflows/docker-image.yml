@@ -27,16 +27,16 @@ jobs:
 
       - name: Create env file
         run: |
-#          touch .env
-#          echo NEXT_PUBLIC_CLIENT_URL=${{ secrets.NEXT_PUBLIC_CLIENT_URL }} >> .env
-#          echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> .env
-#          echo NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} >> .env
-#          echo KEYCLOAK_ID=${{ secrets.KEYCLOAK_ID }} >> .env
-#          echo KEYCLOAK_SECRET=${{ secrets.KEYCLOAK_SECRET }} >> .env
-#          echo KEYCLOAK_ISSUER=${{ secrets.KEYCLOAK_ISSUER }} >> .env
-#          echo BACKEND_URL_ENDPOINT=${{ secrets.BACKEND_URL_ENDPOINT }} >> .env
-#          echo CLIENT_DOMAIN=${{ secrets.CLIENT_DOMAIN }} >> .env
-#          echo NETWORK=${{ secrets.NETWORK }} >> .env
+          touch .env
+          echo NEXT_PUBLIC_CLIENT_URL=${{ secrets.NEXT_PUBLIC_CLIENT_URL }} >> .env
+          echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> .env
+          echo NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} >> .env
+          echo KEYCLOAK_ID=${{ secrets.KEYCLOAK_ID }} >> .env
+          echo KEYCLOAK_SECRET=${{ secrets.KEYCLOAK_SECRET }} >> .env
+          echo KEYCLOAK_ISSUER=${{ secrets.KEYCLOAK_ISSUER }} >> .env
+          echo BACKEND_URL_ENDPOINT=${{ secrets.BACKEND_URL_ENDPOINT }} >> .env
+          echo CLIENT_DOMAIN=${{ secrets.CLIENT_DOMAIN }} >> .env
+          echo NETWORK=${{ secrets.NETWORK }} >> .env
 #          echo INFURA_API_KEY=${{ secrets.INFURA_API_KEY }} >> .env
 #          echo NEXT_PUBLIC_CONTRACT_ADDRESS=${{ secrets.NEXT_PUBLIC_CONTRACT_ADDRESS }} >> .env
 #          echo NEXT_PUBLIC_WALLET_CONNECT_ID=${{ secrets.NEXT_PUBLIC_WALLET_CONNECT_ID }} >> .env

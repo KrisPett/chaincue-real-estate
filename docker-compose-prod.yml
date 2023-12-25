@@ -9,7 +9,9 @@ services:
   chaincue_real_estate_prod:
     container_name: chaincue_real_estate_prod
     image: ghcr.io/krispett/chaincue-real-estate:main
-    volumes:
-      - .env:/app/.env
+#    volumes:
+#      - .env:/app/.env
+    env_file:
+      - .env
     ports:
       - "3000:3000"
