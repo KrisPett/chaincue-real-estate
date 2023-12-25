@@ -6,7 +6,7 @@ import {useRouter} from "next/navigation";
 import Textfield from "@/lib/Textfield";
 import TextfieldMulti from "@/lib/TextfieldMulti";
 import Dropzone from "react-dropzone";
-import {signIn, useSession} from "next-auth/react";
+import {getSession, signIn, useSession} from "next-auth/react";
 import MintModal from "@/components/add-property/components/MintModal";
 import {CreatePropertyReqBody} from "@/components/add-property/AddPropertyPageDTO";
 import {fetchCreateProperty} from "@/components/add-property/AddPropertyPageAPI";
@@ -19,6 +19,7 @@ const NEXT_PUBLIC_ABI = process.env.NEXT_PUBLIC_ABI
 
 const AddPropertyPage = () => {
   const {data: session} = useSession();
+
   const router = useRouter();
   const {open} = useWeb3Modal()
   const {address, chainId, isConnected} = useWeb3ModalAccount()
@@ -44,10 +45,11 @@ const AddPropertyPage = () => {
     increaseValue(20).then(res => {
     })
   }
-  console.log(session?.access_token)
+  // console.log(session?.access_token)
   const increaseValue = async (amount: number) => {
     if (!isConnected) throw Error("User disconnected")
-
+    const session = await getSession()
+    console.log(session)
     if (walletProvider && session) {
       const ethersProvider = new ethers.BrowserProvider(walletProvider)
       const signer = await ethersProvider.getSigner()
