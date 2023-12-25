@@ -45,11 +45,10 @@ const AddPropertyPage = () => {
     increaseValue(20).then(res => {
     })
   }
-  // console.log(session?.access_token)
+
   const increaseValue = async (amount: number) => {
     if (!isConnected) throw Error("User disconnected")
     const session = await getSession()
-    console.log(session)
     if (walletProvider && session) {
       const ethersProvider = new ethers.BrowserProvider(walletProvider)
       const signer = await ethersProvider.getSigner()
