@@ -44,7 +44,7 @@ const AddPropertyPage = () => {
     increaseValue(20).then(res => {
     })
   }
-
+  console.log(session?.access_token)
   const increaseValue = async (amount: number) => {
     if (!isConnected) throw Error("User disconnected")
 
